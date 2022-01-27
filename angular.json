@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "memzgg-client": "apps/memzgg-client",
+    "memzgg-client-e2e": "apps/memzgg-client-e2e"
+  }
+}
