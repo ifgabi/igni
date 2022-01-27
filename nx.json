@@ -18,7 +18,12 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
       }
     }
   },
@@ -45,5 +50,8 @@
       "style": "css"
     }
   },
-  "defaultProject": "memzgg-client"
+  "defaultProject": "memzgg-client",
+  "plugins": [
+    "@nxrocks/nx-spring-boot"
+  ]
 }

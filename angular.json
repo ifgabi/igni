@@ -1,7 +1,9 @@
 {
   "version": 2,
   "projects": {
+    "memzgg-chatbox": "libs/memzgg-chatbox",
     "memzgg-client": "apps/memzgg-client",
-    "memzgg-client-e2e": "apps/memzgg-client-e2e"
+    "memzgg-client-e2e": "apps/memzgg-client-e2e",
+    "memzgg-server": "apps/memzgg-server"
   }
 }
