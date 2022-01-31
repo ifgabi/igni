@@ -1,0 +1,11 @@
+.chatline-user
+{
+  max-width: 80px;
+  display: inline;
+}
+
+.chatline-text
+{
+  max-width: 260px;
+  display: inline;
+}

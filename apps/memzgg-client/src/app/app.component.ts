@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { ChatboxComponent } from '@memzgg/memzgg-chatbox'
+
 @Component({
   selector: 'memzgg-root',
   templateUrl: './app.component.html',
