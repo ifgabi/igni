@@ -1,0 +1,93 @@
+{
+  "projectType": "application",
+  "root": "apps/igni-client",
+  "sourceRoot": "apps/igni-client/src",
+  "prefix": "memzgg",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/igni-client",
+        "index": "apps/igni-client/src/index.html",
+        "main": "apps/igni-client/src/main.ts",
+        "polyfills": "apps/igni-client/src/polyfills.ts",
+        "tsConfig": "apps/igni-client/tsconfig.app.json",
+        "assets": [
+          "apps/igni-client/src/favicon.ico",
+          "apps/igni-client/src/assets"
+        ],
+        "styles": ["apps/igni-client/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/igni-client/src/environments/environment.ts",
+              "with": "apps/igni-client/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "igni-client:build:production"
+        },
+        "development": {
+          "browserTarget": "igni-client:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "igni-client:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/igni-client/src/**/*.ts",
+          "apps/igni-client/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/igni-client"],
+      "options": {
+        "jestConfig": "apps/igni-client/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

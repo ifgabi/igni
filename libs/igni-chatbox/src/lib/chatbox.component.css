@@ -1,0 +1,22 @@
+.chatbar {
+  display: table-cell;
+  width: 330px;
+}
+.chatbox-container {
+  overflow-y: scroll;
+  height: 700px; /* 100% doesnt do it */
+}
+.send-message {
+  position: relative;
+  height: 85px;
+  bottom: 0px;
+  background-color: red;
+}
+
+#send-message-input {
+  position: sticky;
+  resize: none;
+  width: 99%;
+  height: 99%;
+  bottom: 0px;
+}

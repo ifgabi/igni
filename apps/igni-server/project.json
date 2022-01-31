@@ -1,0 +1,56 @@
+{
+  "root": "apps/igni-server",
+  "sourceRoot": "apps/igni-server/src",
+  "projectType": "application",
+  "targets": {
+    "test": {
+      "executor": "@nxrocks/nx-spring-boot:test",
+      "options": {
+        "root": "apps/igni-server"
+      }
+    },
+    "clean": {
+      "executor": "@nxrocks/nx-spring-boot:clean",
+      "options": {
+        "root": "apps/igni-server"
+      }
+    },
+    "run": {
+      "executor": "@nxrocks/nx-spring-boot:run",
+      "options": {
+        "root": "apps/igni-server"
+      }
+    },
+    "serve": {
+      "executor": "@nxrocks/nx-spring-boot:serve",
+      "options": {
+        "root": "apps/igni-server"
+      }
+    },
+    "buildJar": {
+      "executor": "@nxrocks/nx-spring-boot:buildJar",
+      "options": {
+        "root": "apps/igni-server"
+      }
+    },
+    "buildWar": {
+      "executor": "@nxrocks/nx-spring-boot:buildWar",
+      "options": {
+        "root": "apps/igni-server"
+      }
+    },
+    "buildImage": {
+      "executor": "@nxrocks/nx-spring-boot:buildImage",
+      "options": {
+        "root": "apps/igni-server"
+      }
+    },
+    "buildInfo": {
+      "executor": "@nxrocks/nx-spring-boot:buildInfo",
+      "options": {
+        "root": "apps/igni-server"
+      }
+    }
+  },
+  "tags": []
+}

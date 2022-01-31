@@ -1,5 +1,5 @@
 {
-  "npmScope": "memzgg",
+  "npmScope": "igni",
   "affected": {
     "defaultBase": "main"
   },
@@ -18,12 +18,7 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
   },
@@ -50,8 +45,6 @@
       "style": "css"
     }
   },
-  "defaultProject": "memzgg-client",
-  "plugins": [
-    "@nxrocks/nx-spring-boot"
-  ]
+  "defaultProject": "igni-client",
+  "plugins": ["@nxrocks/nx-spring-boot"]
 }

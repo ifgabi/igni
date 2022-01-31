@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/igni-chatbox",
+  "sourceRoot": "libs/igni-chatbox/src",
+  "prefix": "memzgg",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/igni-chatbox"],
+      "options": {
+        "jestConfig": "libs/igni-chatbox/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/igni-chatbox/src/**/*.ts",
+          "libs/igni-chatbox/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,15 @@
+<div class="chatbar">
+  <div class="chatbox-container">
+    <memzgg-chatlinecollection
+      [chatlines]="chatlines$ | async"
+    ></memzgg-chatlinecollection>
+  </div>
+  <div class="send-message">
+    <textarea
+      (keydown)="keydownEvent($event)"
+      id="send-message-input"
+      [(ngModel)]="textBoxMessage"
+    >
+    </textarea>
+  </div>
+</div>

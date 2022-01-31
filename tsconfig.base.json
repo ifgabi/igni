@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@memzgg/memzgg-chatbox": ["libs/memzgg-chatbox/src/index.ts"]
+      "@memzgg/igni-chatbox": ["libs/igni-chatbox/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

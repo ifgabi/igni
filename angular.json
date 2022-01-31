@@ -1,9 +1,9 @@
 {
   "version": 2,
   "projects": {
-    "memzgg-chatbox": "libs/memzgg-chatbox",
-    "memzgg-client": "apps/memzgg-client",
-    "memzgg-client-e2e": "apps/memzgg-client-e2e",
-    "memzgg-server": "apps/memzgg-server"
+    "igni-chatbox": "libs/igni-chatbox",
+    "igni-client": "apps/igni-client",
+    "igni-client-e2e": "apps/igni-client-e2e",
+    "igni-server": "apps/igni-server"
   }
 }

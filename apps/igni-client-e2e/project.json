@@ -1,0 +1,28 @@
+{
+  "root": "apps/igni-client-e2e",
+  "sourceRoot": "apps/igni-client-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/igni-client-e2e/cypress.json",
+        "devServerTarget": "igni-client:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "igni-client:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/igni-client-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["igni-client"]
+}
