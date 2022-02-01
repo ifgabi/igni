@@ -19,7 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import gg.igni.igniserver.account.service.MemzUserDetailsService;
+import gg.igni.igniserver.account.service.IgniUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
   @Autowired
-	private MemzUserDetailsService userDetailsService;
+	private IgniUserDetailsService userDetailsService;
 
   @Override
   protected void configure(AuthenticationManagerBuilder authb) throws Exception

@@ -2,7 +2,7 @@
   "projectType": "application",
   "root": "apps/igni-client",
   "sourceRoot": "apps/igni-client/src",
-  "prefix": "memzgg",
+  "prefix": "igni",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",

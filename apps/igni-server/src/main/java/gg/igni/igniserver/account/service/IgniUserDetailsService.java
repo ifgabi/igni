@@ -3,8 +3,6 @@ package gg.igni.igniserver.account.service;
 import gg.igni.igniserver.account.model.User;
 import gg.igni.igniserver.account.repositories.UserRepository;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MemzUserDetailsService implements UserDetailsService {
+public class IgniUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	UserRepository userRepository;

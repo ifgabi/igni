@@ -11,8 +11,8 @@
 	<groupId>gg.igni</groupId>
 	<artifactId>igniserver</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>memzgg-server</name>
-	<description>a server for memzgg website</description>
+	<name>igni-server</name>
+	<description>a server for igni website</description>
 	<properties>
 		<java.version>16</java.version>
 	</properties>
@@ -85,7 +85,7 @@
 			<artifactId>jmail</artifactId>
 			<version>1.2.1</version>
 		</dependency>
-	</dependencies>	
+	</dependencies>
 
 	<build>
 		<plugins>

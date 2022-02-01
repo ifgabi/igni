@@ -15,10 +15,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'memzgg-client'`, () => {
+  it(`should have as title 'igni-client'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('memzgg-client');
+    expect(app.title).toEqual('igni-client');
   });
 
   it('should render title', () => {
@@ -26,7 +26,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome memzgg-client'
+      'Welcome igni-client'
     );
   });
 });

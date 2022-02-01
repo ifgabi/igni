@@ -1,0 +1,51 @@
+<div class="text-center">
+  <br/>
+
+  <form role="form" (submit)="signUp()" class="form-signup">
+    <br/>
+    <!-- TODO icon -->
+    <div class="message">
+      <p>Sign up form</p>
+    </div>
+
+    <br/>
+
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        class="form-control"
+        [(ngModel)]="this.username"
+      /><br />
+      <label style="color: brown;" [innerText]="this.usernameErrorMessage"></label>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input
+        type="text"
+        id="email"
+        name="email"
+        class="form-control"
+        [(ngModel)]="this.email"
+      /><br />
+      <label style="color: brown;" [innerText]="this.emailErrorMessage"></label>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input
+        type="text"
+        id="password"
+        name="password"
+        class="form-control"
+        [(ngModel)]="this.password"
+      />
+      <label style="color: brown;" [innerText]="this.passwordErrorMessage"></label>
+    </div>
+
+    <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+  </form>
+</div>

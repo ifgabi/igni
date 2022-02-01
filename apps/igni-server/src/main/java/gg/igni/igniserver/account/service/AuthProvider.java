@@ -35,9 +35,7 @@ public class AuthProvider implements AuthenticationProvider {
       if(passwordEncoder.matches(password, user.getPasswordHash()))
       {
         //return a new UserPasswordAuthenticationToken
-          return new UsernamePasswordAuthenticationToken(
-              user.getUsername(), user.getPasswordHash(), user.getPrivilegesAsAuthorities()
-            );
+          return new UsernamePasswordAuthenticationToken(user, password);
       }
 
       return null;

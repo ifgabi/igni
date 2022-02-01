@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Chatline } from '../chatbox-content.models';
 
 @Component({
-  selector: 'memzgg-chatline-element',
+  selector: 'igni-chatline-element',
   templateUrl: './chatline-element.component.html',
   styleUrls: ['./chatline-element.component.css'],
 })

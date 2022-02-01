@@ -2,7 +2,7 @@
   "projectType": "library",
   "root": "libs/igni-chatbox",
   "sourceRoot": "libs/igni-chatbox/src",
-  "prefix": "memzgg",
+  "prefix": "igni",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
