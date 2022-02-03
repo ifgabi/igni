@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -29,13 +30,14 @@ import gg.igni.igniserver.account.data.SignUpRequestDto;
 import gg.igni.igniserver.account.data.SignUpResponseDto;
 import gg.igni.igniserver.account.data.UserDto;
 import gg.igni.igniserver.account.model.User;
-import gg.igni.igniserver.account.service.AccountService;
+import gg.igni.igniserver.account.service.IAccountService;
 
 @Controller
 public class AccountController {
 
 	@Autowired
-	private AccountService accountService;
+  @Qualifier("accountService")
+	private IAccountService accountService;
 
 	@PostMapping("/signup")
 	@ResponseBody
@@ -44,7 +46,7 @@ public class AccountController {
 
 		SignUpResponseDto respbody = new SignUpResponseDto();
 
-		//no reqbody? spring internal error
+		//reqbody missing, doesnt happen
 		if(reqbody == null)
 			throw new NullPointerException("RequestBody is null in signUp endpoint.");
 
@@ -151,7 +153,7 @@ public class AccountController {
 
 		sc.setAuthentication(newAuth.get());
 
-    User user = (User) newAuth.get().getPrincipal();
+    User user = (User) newAuth.get().getDetails();
     UserDto userdto = new UserDto();
 
     //use mapper

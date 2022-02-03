@@ -10,11 +10,12 @@ import { SignupPageComponent } from './signup-page/signup-page.component';
 import { AccountMenuComponent } from './account-menu/account-menu.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
+import { AccountService } from './accountservice.service';
 
 @NgModule({
   declarations: [AppComponent, LoginPageComponent, StreamsPageComponent, SignupPageComponent, AccountMenuComponent],
   imports: [BrowserModule, FormsModule, IgniChatboxModule, AppRoutingModule],
-  providers: [],
+  providers: [AccountService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

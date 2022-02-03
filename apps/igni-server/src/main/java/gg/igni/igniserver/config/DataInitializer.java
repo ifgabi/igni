@@ -1,4 +1,4 @@
-package gg.igni.igniserver.account.service;
+package gg.igni.igniserver.config;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -59,15 +59,16 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
       createRoleIfNotFound("ROLE_GUEST", null);
 
       Role adminRole = roleRepository.findByName("ROLE_ADMIN").orElse(null);
+      Role userRole = roleRepository.findByName("ROLE_USER").orElse(null);
+
       User admin = new User();
       admin.setUsername("admin");
       admin.setPasswordHash(passwordEncoder.encode("admin"));
       admin.setEmail("aresgab@live.ca");
-      admin.setRoles(new HashSet<>(Arrays.asList(adminRole)));
+      admin.setRoles(new HashSet<>(Arrays.asList(adminRole, userRole)));
       admin.setEnabled(true);
       userRepository.save(admin);
 
-      Role userRole = roleRepository.findByName("ROLE_USER").orElse(null);
       User user1 = new User();
       user1.setUsername("user1");
       user1.setPasswordHash(passwordEncoder.encode("user1"));

@@ -9,6 +9,7 @@ import { ChatboxContentEffects } from './chatbox-content.effects';
 import { ChatlineElementComponent } from './chatline-element/chatline-element.component';
 import { ChatlinecollectionComponent } from './chatlinecollection/chatlinecollection.component';
 import { FormsModule } from '@angular/forms';
+import { ChatService } from './chatservice.service';
 
 @NgModule({
   imports: [
@@ -29,5 +30,6 @@ import { FormsModule } from '@angular/forms';
     ChatlinecollectionComponent,
   ],
   exports: [ChatboxComponent],
+  providers: [ChatService]
 })
 export class IgniChatboxModule {}
