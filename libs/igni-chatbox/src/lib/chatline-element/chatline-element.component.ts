@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Chatline } from '../chatbox-content.models';
+import { ChatMessage } from '../data/ChatMessage';
 
 @Component({
   selector: 'igni-chatline-element',
@@ -7,7 +7,7 @@ import { Chatline } from '../chatbox-content.models';
   styleUrls: ['./chatline-element.component.css'],
 })
 export class ChatlineElementComponent implements OnInit {
-  @Input() chatLine: Chatline = { id: -1, author: '', message: '' };
+  @Input() chatMessage: ChatMessage | null = null;
 
   constructor() {
     return;

@@ -11,6 +11,14 @@ import { ChatlinecollectionComponent } from './chatlinecollection/chatlinecollec
 import { FormsModule } from '@angular/forms';
 import { ChatService } from './chatservice.service';
 
+import {
+  InjectableRxStompConfig,
+  RxStompService,
+  rxStompServiceFactory,
+} from '@stomp/ng2-stompjs';
+
+import { myRxStompConfig } from './my-rx-stomp.config';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,6 +38,17 @@ import { ChatService } from './chatservice.service';
     ChatlinecollectionComponent,
   ],
   exports: [ChatboxComponent],
-  providers: [ChatService]
+  providers: [
+    ChatService,
+    {
+      provide: InjectableRxStompConfig,
+      useValue: myRxStompConfig,
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig],
+    }
+  ]
 })
 export class IgniChatboxModule {}

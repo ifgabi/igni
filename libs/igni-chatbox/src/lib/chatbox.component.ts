@@ -2,10 +2,12 @@ import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Chatline } from './chatbox-content.models';
 import { loadChatboxContents, loadChatline } from './chatbox-content.actions';
-import { selectAllChatlines } from './chatbox-content.selectors';
+import { selectAllChatMessages } from './chatbox-content.selectors';
 import { ChatboxContentState } from './chatbox-content.reducer';
+import { ChatService } from './chatservice.service';
+
+import { ChatMessage } from './data/ChatMessage';
 
 @Component({
   selector: 'igni-chatbox',
@@ -18,14 +20,15 @@ export class ChatboxComponent implements OnInit {
   @Input() logoutEvent : EventEmitter<any>;
   @Input() sessioncheckEvent: EventEmitter<boolean>;
 
-  chatlines$: Observable<Array<Chatline>> =
-    this.store.select(selectAllChatlines);
+  chatMessages$: Observable<Array<ChatMessage>> =
+    this.store.select(selectAllChatMessages);
 
   textBoxMessage: string;
 
   constructor(
     private store: Store<ChatboxContentState>,
-    private http: HttpClient
+    private http: HttpClient,
+    private chatService: ChatService
   ) {
     this.textBoxMessage = "";
     this.loginEvent = new EventEmitter<any>();
@@ -34,19 +37,16 @@ export class ChatboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //TODO get from websocket instead
-    const linesobs: Observable<Array<Chatline>> = this.http.get<
-      Array<Chatline>
-    >('http://localhost:8080/test', {
-      headers: new HttpHeaders(),
-      withCredentials: true,
-      responseType: 'json',
-      observe: 'body',
-    });
 
-    linesobs.subscribe((chatLines) => {
-      this.store.dispatch(loadChatboxContents({ chatLines }));
-    });
+
+    this.chatService.receivedMessage.subscribe((chatMessage: ChatMessage) => {
+      console.log("BEFORE DISPATCH???: " + chatMessage);
+      this.store.dispatch(loadChatline({ chatMessage }));
+    })
+
+    // linesobs.subscribe((chatLines) => {
+    //   this.store.dispatch(loadChatboxContents({ chatLines }));
+    // });
 
     this.loginEvent.subscribe(this.onLogin.bind(this));
     this.logoutEvent.subscribe(this.onLogout.bind(this));
@@ -81,7 +81,13 @@ export class ChatboxComponent implements OnInit {
   }
 
   sendMessage() {
-    //TODO chatservice send message to ws
+    if(this.textBoxMessage !== null)
+      if(this.textBoxMessage !== undefined)
+        if(this.textBoxMessage !== "")
+        {
+          this.chatService.sendMessage(this.textBoxMessage);
+          this.textBoxMessage = "";
+        }
     return;
   }
 }

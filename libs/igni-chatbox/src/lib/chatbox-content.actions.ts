@@ -1,12 +1,12 @@
 import { createAction, props } from '@ngrx/store';
-import { Chatline } from './chatbox-content.models';
+import { ChatMessage } from './data/ChatMessage';
 
 export const loadChatboxContents = createAction(
-  '[ChatboxContent] Load ChatboxContents',
-  props<{ chatLines: Array<Chatline> }>()
+  '[ChatboxContent] Load ChatMessages',
+  props<{ chatMessages: Array<ChatMessage> }>()
 );
 
 export const loadChatline = createAction(
-  '[ChatboxContent] Load Chatline',
-  props<{ chatLine: Chatline }>()
+  '[ChatboxContent] Load ChatMessage',
+  props<{ chatMessage: ChatMessage }>()
 );

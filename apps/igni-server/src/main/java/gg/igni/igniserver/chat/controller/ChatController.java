@@ -26,9 +26,9 @@ public class ChatController {
   ChatService chatService;
 
   @PreAuthorize("hasAuthority('PRIVILEGE_CHAT_USAGE')")
-	@MessageMapping("/sendToChannel/{chen}")
-	@SendTo("/channel/{chen}")
-	public ChatMessageSendDto sendMessage(@DestinationVariable String chen, @RequestBody ChatMessageRecvDto msgr,
+	@MessageMapping("/sendToChannel")
+	@SendTo("/channel")
+	public ChatMessageSendDto sendMessage(@RequestBody ChatMessageRecvDto msgr,
 			SimpMessageHeaderAccessor headerAccessor, Authentication auth) throws Exception {
 
     User user = (User) auth.getDetails();

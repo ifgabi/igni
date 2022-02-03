@@ -1,41 +1,43 @@
 import { createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as ChatboxContentActions from './chatbox-content.actions';
-import { Chatline } from './chatbox-content.models';
+import { ChatMessage } from './data/ChatMessage';
+// import { Chatline } from './chatbox-content.models';
 
-export const chatboxContentFeatureKey = 'chatlines';
+export const chatboxContentFeatureKey = 'chatMessages';
 
-export function selectChatlineId(a: Chatline): number {
-  return a.id;
+export function selectChatMessageId(a: ChatMessage): number {
+  console.log("A???:" + JSON.stringify(a));
+  return a?.id ?? -1;
 }
 
-export function sortById(a: Chatline, b: Chatline): number {
+export function sortById(a: ChatMessage, b: ChatMessage): number {
   return a.id > b.id ? 1 : -1;
 }
 
-export const adapter: EntityAdapter<Chatline> = createEntityAdapter<Chatline>({
-  selectId: selectChatlineId,
+export const adapter: EntityAdapter<ChatMessage> = createEntityAdapter<ChatMessage>({
+  selectId: selectChatMessageId,
   sortComparer: sortById,
 });
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ChatboxContentState extends EntityState<Chatline> {
-  selectedChatlineId: number | null;
+export interface ChatboxContentState extends EntityState<ChatMessage> {
+  selectedChatMessageId: number;
 }
 
 export const initialState: ChatboxContentState = adapter.getInitialState({
-  selectedChatlineId: null,
+  selectedChatMessageId: -1,
 });
 
 export const reducer = createReducer(
   initialState,
 
-  on(ChatboxContentActions.loadChatboxContents, (state, { chatLines }) =>
-    adapter.addMany(chatLines, state)
+  on(ChatboxContentActions.loadChatboxContents, (state, { chatMessages }) =>
+    adapter.addMany(chatMessages, state)
   ),
 
-  on(ChatboxContentActions.loadChatline, (state, { chatLine }) =>
-    adapter.addOne(chatLine, state)
+  on(ChatboxContentActions.loadChatline, (state, { chatMessage }) =>
+    adapter.addOne(chatMessage, state)
   )
 );
 
