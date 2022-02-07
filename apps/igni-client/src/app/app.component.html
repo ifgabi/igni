@@ -1,7 +1,7 @@
 <div class="main-div container-fluid p-0">
   <nav #viewNavBarHook class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <!-- <a class="navbar-brand" href="#">Navbar</a> -->
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -22,16 +22,19 @@
             <a [ngClass]="this.router.url.includes('/login-page')?'nav-link active' : 'nav-link'" aria-current="page" href="#" routerLink="/login-page">Login</a>
           </li>
 
-          <li *ngIf="this.accountService.authenticated">
-            <igni-account-menu></igni-account-menu>
-          </li>
-
         </ul>
 
-        <form class="d-flex">
+        <ul class="navbar-nav navbar-right">
+          <li class="nav-item dropdown" *ngIf="this.accountService.authenticated">
+            <!-- [user]="this.accountService.currentUser" -->
+            <igni-account-menu ></igni-account-menu>
+          </li>
+        </ul>
+
+        <!-- <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        </form> -->
 
       </div>
     </div>
@@ -39,7 +42,11 @@
 
   <div class="content-stretch d-flex align-items-stretch">
     <div class="parent-chatbar">
-      <igni-chatbox></igni-chatbox>
+      <igni-chatbox
+        [loginEvent]="this.loginSubject.asObservable()"
+        [logoutEvent]="this.logoutSubject.asObservable()"
+        [sessioncheckEvent]="this.sessioncheckSubject.asObservable()"
+      ></igni-chatbox>
     </div>
 
     <div class="page-content">

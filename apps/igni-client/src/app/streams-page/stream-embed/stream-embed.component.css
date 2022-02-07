@@ -1,0 +1,30 @@
+.embed-box{
+  position: relative;
+  width: 300px;
+  height: 250px;
+  background-color: white;
+  margin: 5px;
+  border: 1px;
+  border-style: solid;
+  border-color: black;
+}
+
+.embed-preview-image{
+  position: relative;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+.embed-memo{
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding-bottom: 0;
+
+  text-align: center;
+  background-color: grey;
+}

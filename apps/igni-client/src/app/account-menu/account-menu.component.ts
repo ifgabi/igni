@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from '../account/accountservice.service';
 
 @Component({
   selector: 'igni-account-menu',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountMenuComponent implements OnInit {
 
-  constructor() { }
+  // user: User | null;
+
+  constructor(private accountService: AccountService) {
+    // this.user = null;
+  }
 
   ngOnInit(): void {
+    return;
+  }
+
+  logoutClicked()
+  {
+    this.accountService.unauthenticate();
   }
 
 }

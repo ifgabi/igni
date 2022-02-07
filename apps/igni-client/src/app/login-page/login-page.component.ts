@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../accountservice.service';
+import { AccountService } from '../account/accountservice.service';
 
 @Component({
   selector: 'igni-login-page',

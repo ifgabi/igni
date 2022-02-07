@@ -18,6 +18,7 @@ import {
 } from '@stomp/ng2-stompjs';
 
 import { myRxStompConfig } from './my-rx-stomp.config';
+import { LoginpromptComponent } from './loginprompt/loginprompt.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { myRxStompConfig } from './my-rx-stomp.config';
     ChatboxComponent,
     ChatlineElementComponent,
     ChatlinecollectionComponent,
+    LoginpromptComponent,
   ],
   exports: [ChatboxComponent],
   providers: [

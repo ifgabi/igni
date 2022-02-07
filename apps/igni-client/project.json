@@ -17,8 +17,26 @@
           "apps/igni-client/src/favicon.ico",
           "apps/igni-client/src/assets"
         ],
-        "styles": ["apps/igni-client/src/styles.css"],
-        "scripts": []
+        "styles": [
+          "apps/igni-client/src/styles.css",
+          {
+            "input": "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+            "inject": false,
+            "bundleName": "bootstrap"
+          }
+        ],
+        "scripts": [
+          {
+            "input": "./node_modules/jquery/dist/jquery.min.js",
+            "inject": false,
+            "bundleName": "jquery"
+           },
+           {
+             "input": "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+             "inject": false,
+             "bundleName": "bootstrap"
+           }
+        ]
       },
       "configurations": {
         "production": {

@@ -17,6 +17,10 @@ import gg.igni.igniserver.account.model.User;
 import gg.igni.igniserver.account.repositories.PrivilegeRepository;
 import gg.igni.igniserver.account.repositories.RoleRepository;
 import gg.igni.igniserver.account.repositories.UserRepository;
+import gg.igni.igniserver.watch.model.Embed;
+import gg.igni.igniserver.watch.model.EmbedSite;
+import gg.igni.igniserver.watch.repository.EmbedRepository;
+import gg.igni.igniserver.watch.repository.EmbedSiteRepository;
 
 @Component
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
@@ -30,6 +34,12 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 
   @Autowired
   private PrivilegeRepository privilegeRepository;
+
+  @Autowired
+  private EmbedRepository embedRepository;
+
+  @Autowired
+  private EmbedSiteRepository embedSiteRepository;
 
 
   @Autowired
@@ -76,6 +86,35 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
       user1.setRoles(new HashSet<>(Arrays.asList(userRole)));
       user1.setEnabled(true);
       userRepository.save(user1);
+
+      EmbedSite esYoutube = new EmbedSite();
+      esYoutube.setName("YouTube");
+      esYoutube.setCode("YOUTUBE_TOKEN");
+      esYoutube.setEmbeds(new HashSet<Embed>());
+
+      EmbedSite esTwitch = new EmbedSite();
+      esTwitch.setName("TwitchTV");
+      esTwitch.setCode("TWITCH_TOKEN");
+      esTwitch.setEmbeds(new HashSet<Embed>());
+
+      Embed ytEmbed = new Embed();
+      esYoutube.getEmbeds().add(ytEmbed);
+      ytEmbed.setToken("GlV5sXdXPu4");
+      ytEmbed.setMemo("This is a youtube embed!");
+
+      Embed ttvEmbed = new Embed();
+      esTwitch.getEmbeds().add(ttvEmbed);
+      ttvEmbed.setToken("gypsy93");
+      ttvEmbed.setMemo("This is a TTV embed!");
+
+      embedSiteRepository.save(esYoutube);
+      embedSiteRepository.save(esTwitch);
+
+      ytEmbed.setEmbedSite(esYoutube);
+      embedRepository.save(ytEmbed);
+
+      ttvEmbed.setEmbedSite(esTwitch);
+      embedRepository.save(ttvEmbed);
 
       alreadySetup = true;
   }

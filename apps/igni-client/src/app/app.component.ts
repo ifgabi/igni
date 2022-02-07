@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
-import { AccountService } from './accountservice.service';
+import { AccountService } from './account/accountservice.service';
 
 import { ChatboxComponent } from '@igni/igni-chatbox';
 
@@ -13,7 +13,6 @@ import { ChatboxComponent } from '@igni/igni-chatbox';
 })
 export class AppComponent implements OnInit {
   title = 'Igni Website';
-
   serverError: boolean;
 
   loginEventSubscription: Subscription | undefined;
@@ -21,9 +20,16 @@ export class AppComponent implements OnInit {
   authenticatedUpdateEventSubscription: Subscription | undefined;
   serverUnresponsiveEventSubscription: Subscription | undefined;
 
+  loginSubject: Subject<any>;
+  logoutSubject: Subject<any>;
+  sessioncheckSubject: Subject<boolean>;
+
   constructor(public accountService: AccountService, public router:Router)
   {
     this.serverError = false;
+    this.loginSubject = new Subject<any>();
+    this.logoutSubject = new Subject<any>();
+    this.sessioncheckSubject = new Subject<boolean>();
   }
 
   ngOnInit()
@@ -37,6 +43,7 @@ export class AppComponent implements OnInit {
   authenticatedUpdateSetup(authenticated: boolean)
   {
 
+    this.sessioncheckSubject.next(authenticated);
     //TODO implement chatservice dependence
     if(authenticated)
     {
@@ -72,7 +79,8 @@ export class AppComponent implements OnInit {
   {
     if(loggedIn)
     {
-      // this.chatservice.connect();
+      this.loginSubject.next(null);
+      //this.chatservice.connect();
       this.navigate("streams-page");
     }
   }
@@ -81,6 +89,7 @@ export class AppComponent implements OnInit {
   {
     if(loggedOut)
     {
+      this.logoutSubject.next(null);
       //this.chatservice.disconnect();
       this.navigate("login-page");
     }

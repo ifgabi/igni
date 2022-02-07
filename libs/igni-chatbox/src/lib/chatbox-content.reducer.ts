@@ -38,7 +38,12 @@ export const reducer = createReducer(
 
   on(ChatboxContentActions.loadChatline, (state, { chatMessage }) =>
     adapter.addOne(chatMessage, state)
-  )
+  ),
+
+  on(ChatboxContentActions.removeChatboxContents, (state) => {
+    const newState: ChatboxContentState = adapter.removeAll(state);
+    return newState;
+  })
 );
 
 export const { selectAll } = adapter.getSelectors();

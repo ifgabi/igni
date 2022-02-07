@@ -10,3 +10,7 @@ export const loadChatline = createAction(
   '[ChatboxContent] Load ChatMessage',
   props<{ chatMessage: ChatMessage }>()
 );
+
+export const removeChatboxContents = createAction(
+  '[ChatboxContent] Remove ChatMessages'
+);

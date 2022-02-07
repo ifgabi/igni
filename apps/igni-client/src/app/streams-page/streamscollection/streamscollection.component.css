@@ -1,0 +1,16 @@
+/* .streams-embed-list{
+  position: relative;
+  display: flex;
+  flex: 1, 1 500px;
+  flex-direction:row;
+} */
+
+.streams-embed-list {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.streams-embed-list>*{
+
+}

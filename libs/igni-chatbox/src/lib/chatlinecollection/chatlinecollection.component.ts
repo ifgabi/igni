@@ -8,9 +8,10 @@ import { ChatMessage } from '../data/ChatMessage';
 })
 export class ChatlinecollectionComponent implements OnInit {
   @Input() chatMessages: Array<ChatMessage> | null = [];
+  @Input() statusMessage: string;
 
   constructor() {
-    return;
+    this.statusMessage = "";
   }
 
   ngOnInit(): void {

@@ -1,25 +1,55 @@
 .chatbox
 {
+  position:relative;
   width: 330px;
   height: 100%;
+
+  border: 2px;
+  border-color: black;
+  border-style: solid;
 }
 
 .chatbox-container {
   overflow-y: scroll;
-  height: 100%; /* 100% doesnt do it */
+  height: 100%;
 }
 
 .send-message {
   position: relative;
-  height: 85px;
-  bottom: 0px;
-  background-color: red;
+  height: 75px;
+
+  padding: 0px;
+  margin: 0px;
+
+  border: 2px;
+  border-color: black;
+  border-style: solid;
 }
 
 #send-message-input {
-  position: sticky;
+  position: relative;
   resize: none;
   width: 100%;
   height: 100%;
   bottom: 0px;
+
+  outline: none;
+  border: none;
+
+  padding: 0px;
+  margin: 0px;
+}
+
+.loginprompt{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  /* right: 0px;
+  bottom: 0px; */
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  z-index: 100;
+  background-color: white;
 }

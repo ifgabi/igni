@@ -65,7 +65,7 @@ export class AccountService {
   signupEmailErrorEvent:EventEmitter<string> = new EventEmitter();
 
   //TODO make use of currentuser
-  currentUser: UserDto | null | undefined;
+  currentUser: UserDto | null;
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   authenticated: boolean = false;
 
@@ -74,6 +74,8 @@ export class AccountService {
   pollingInterval:number | null | undefined;
 
   constructor(private http: HttpClient) {
+    this.currentUser = null;
+
     this.pollingInterval = window.setInterval(this.isAuthenticatedInterval.bind(this), 5000);
     this.isAuthenticatedInterval();
   }

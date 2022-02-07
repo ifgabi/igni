@@ -1,0 +1,17 @@
+.container{
+  display: table;
+  position: relative;
+  left: 0px;
+  top: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.announcer{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  color: black;
+  font-size: x-large;
+}

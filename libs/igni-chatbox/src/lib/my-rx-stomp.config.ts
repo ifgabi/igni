@@ -12,8 +12,8 @@ export const myRxStompConfig: InjectableRxStompConfig = {
   },
 
   // Interval in milliseconds, set to 0 to disable
-  heartbeatIncoming: 5000,
-  heartbeatOutgoing: 5000,
+  heartbeatIncoming: 1000,
+  heartbeatOutgoing: 1000,
 
   // Wait in milliseconds before attempting auto reconnect
   // Set to 0 to disable

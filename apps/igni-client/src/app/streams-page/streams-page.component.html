@@ -1,1 +1,6 @@
-<p>streams-page works!</p>
+<div class="streams-page">
+  <igni-streamscollection
+    [embeds]="this.embeds$ | async"
+  >
+  </igni-streamscollection>
+</div>

@@ -1,12 +1,15 @@
 
 <div class="chatbox">
-  <div class="chatbox-container">
+  <div class="chatbox-container" id="chat-scroll-box">
+    <igni-loginprompt class="loginprompt" *ngIf="this.showingLoginPrompt"></igni-loginprompt>
     <igni-chatlinecollection
       [chatMessages]="chatMessages$ | async"
+      [statusMessage]="this.statusMessage"
     ></igni-chatlinecollection>
   </div>
   <div class="send-message">
     <textarea
+      [disabled]="this.currentStatus !== 'OPEN'"
       (keydown)="keydownEvent($event)"
       id="send-message-input"
       [(ngModel)]="textBoxMessage"
