@@ -1,0 +1,12 @@
+<!-- <div *ngIf="this.embed?.embedSite?.code -->
+<div class="stream-page">
+  <div [ngSwitch]="this.embed?.embedSite?.code">
+    <div *ngSwitchCase="'YOUTUBE_TOKEN'">
+      <iframe class="stream-embed-viewing" [src]="yturl | youtubeurl" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div *ngSwitchCase="'TWITCH_TOKEN'">
+
+    </div>
+    <div *ngSwitchDefault>Invalid stream.</div>
+  </div>
+</div>

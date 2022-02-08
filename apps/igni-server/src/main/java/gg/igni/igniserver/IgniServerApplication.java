@@ -17,21 +17,3 @@ public class IgniServerApplication {
 	}
 
 }
-record Test(int id, String author, String message)
-{
-
-}
-
-@Controller
-class Testing{
-
-  @GetMapping(value = "/test")
-  @ResponseBody
-  public List<Test> getTestData()
-  {
-    List<Test> list = new ArrayList<Test>();
-    list.add(new Test(0, "test", "test"));
-    list.add(new Test(1, "test2", "test2"));
-    return list;
-  }
-}

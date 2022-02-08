@@ -63,7 +63,7 @@ export class ChatboxComponent implements OnInit, OnDestroy {
 
 
       setTimeout(() => {
-        this.scrollbox.scrollTop = this.scrollbox.scrollHeight;
+        this.scrollToBottom();
       }, 10);
     })
 
@@ -91,6 +91,9 @@ export class ChatboxComponent implements OnInit, OnDestroy {
       {
         this.statusMessage = "Chat disconnected."
       }
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 10);
     });
 
     this.chatService.activate();
@@ -106,7 +109,9 @@ export class ChatboxComponent implements OnInit, OnDestroy {
   onLogin(test: any)
   {
     this.showingLoginPrompt = false;
-    this.chatService.forceReconnect();
+    setTimeout(() => {
+      this.chatService.forceReconnect()
+    }, 2500);
   }
 
   onLogout(test: any)
@@ -175,6 +180,11 @@ export class ChatboxComponent implements OnInit, OnDestroy {
           this.textBoxMessage = "";
         }
     return;
+  }
+
+  scrollToBottom()
+  {
+    this.scrollbox.scrollTop = this.scrollbox.scrollHeight;
   }
 }
 

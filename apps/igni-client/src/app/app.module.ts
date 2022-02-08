@@ -19,6 +19,9 @@ import { StreamsContentEffects } from './streams-page/streams-content.effects';
 import { StreamscollectionComponent } from './streams-page/streamscollection/streamscollection.component';
 import { StreamEmbedComponent } from './streams-page/stream-embed/stream-embed.component';
 import { CommonModule } from '@angular/common';
+import { StreamPageComponent } from './stream-page/stream-page.component';
+import { YoutubeurlPipe } from './stream-page/youtubeurl.pipe';
+import { StreamAddbarComponent } from './stream-addbar/stream-addbar.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { CommonModule } from '@angular/common';
     SignupPageComponent,
     AccountMenuComponent,
     StreamscollectionComponent,
-    StreamEmbedComponent
+    StreamEmbedComponent,
+    StreamPageComponent,
+    YoutubeurlPipe,
+    StreamAddbarComponent
   ],
   imports: [
     BrowserModule,

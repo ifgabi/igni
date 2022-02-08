@@ -24,6 +24,10 @@
 
         </ul>
 
+        <ul class="navbar-nav mx-auto">
+          <igni-stream-addbar></igni-stream-addbar>
+        </ul>
+
         <ul class="navbar-nav navbar-right">
           <li class="nav-item dropdown" *ngIf="this.accountService.authenticated">
             <!-- [user]="this.accountService.currentUser" -->
@@ -40,17 +44,19 @@
     </div>
   </nav>
 
-  <div class="content-stretch d-flex align-items-stretch">
-    <div class="parent-chatbar">
-      <igni-chatbox
-        [loginEvent]="this.loginSubject.asObservable()"
-        [logoutEvent]="this.logoutSubject.asObservable()"
-        [sessioncheckEvent]="this.sessioncheckSubject.asObservable()"
-      ></igni-chatbox>
-    </div>
+  <div class="content-box">
+    <div class="content-stretch d-flex align-items-stretch">
+      <div class="parent-chatbar">
+        <igni-chatbox
+          [loginEvent]="this.loginSubject.asObservable()"
+          [logoutEvent]="this.logoutSubject.asObservable()"
+          [sessioncheckEvent]="this.sessioncheckSubject.asObservable()"
+        ></igni-chatbox>
+      </div>
 
-    <div class="page-content">
-      <router-outlet></router-outlet>
+      <div class="page-content">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
 </div>

@@ -7,7 +7,6 @@ import { ChatMessage } from './data/ChatMessage';
 export const chatboxContentFeatureKey = 'chatMessages';
 
 export function selectChatMessageId(a: ChatMessage): number {
-  console.log("A???:" + JSON.stringify(a));
   return a?.id ?? -1;
 }
 

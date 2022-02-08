@@ -1,15 +1,13 @@
 package gg.igni.igniserver.watch.data;
 
-import java.util.List;
-
 public class EmbedSendDto {
-  private List<EmbedDto> embeds;
+  private EmbedDto embed;
 
-  public List<EmbedDto> getEmbeds() {
-    return embeds;
+  public EmbedDto getEmbed() {
+    return embed;
   }
 
-  public void setEmbeds(List<EmbedDto> embeds) {
-    this.embeds = embeds;
+  public void setEmbed(EmbedDto embed) {
+    this.embed = embed;
   }
 }

@@ -20,6 +20,7 @@ import gg.igni.igniserver.account.repositories.UserRepository;
 import gg.igni.igniserver.watch.model.Embed;
 import gg.igni.igniserver.watch.model.EmbedSite;
 import gg.igni.igniserver.watch.repository.EmbedRepository;
+import gg.igni.igniserver.watch.repository.EmbedRepositoryPageable;
 import gg.igni.igniserver.watch.repository.EmbedSiteRepository;
 
 @Component
