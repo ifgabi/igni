@@ -34,19 +34,16 @@ public class EmbedService {
   @Autowired
   private EmbedRepository embedRepository;
 
-  private final int PER_PAGE = 12;
+  private final int PER_PAGE = 15;
 
-  public List<EmbedDto> getEmbedsForPage(int pageNum)
+  public Page<EmbedDto> getEmbedsForPage(int pageNum)
   {
     Pageable pageable = PageRequest.of(pageNum, PER_PAGE);
 
     Page<Embed> page = embedRepositoryPageable.findAll(pageable);
-    Collection<Embed> coll = page.toList();
 
     ModelMapper mm = new ModelMapper();
-    List<EmbedDto> returnData = coll.stream()
-      .map((embed) -> embed != null? mm.map(embed, EmbedDto.class) : null)
-      .collect(Collectors.toList());
+    Page<EmbedDto> returnData = page.map((embed) -> embed != null? mm.map(embed, EmbedDto.class) : null);
 
     return returnData;
   }

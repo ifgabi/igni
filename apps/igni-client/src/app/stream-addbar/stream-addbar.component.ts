@@ -1,5 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { Embed } from '../stream/data/Embed';
+import { StreamService } from '../stream/streamservice.service';
 
 @Component({
   selector: 'igni-stream-addbar',
@@ -9,16 +12,19 @@ import { Component, OnInit } from '@angular/core';
 export class StreamAddbarComponent implements OnInit {
 
   token: string;
+  embedSiteId: number;
 
-  constructor( private http:HttpClient) {
+  constructor( private streamService: StreamService, private router: Router ) {
     this.token = "";
+    this.embedSiteId = 2;
   }
 
   ngOnInit(): void {
     return;
   }
 
-  submit()
+
+  async submit()
   {
     if(this.token.length < 1)
     {
@@ -26,17 +32,16 @@ export class StreamAddbarComponent implements OnInit {
       return;
     }
 
-    this.http.post("http://localhost:8080/addstream", {
-      "embedSiteId": 1,
-      "token": this.token
-    }, {
-      headers: new HttpHeaders(),
-      withCredentials: true,
-      responseType: 'json',
-      observe: 'response'
-    }).subscribe(obs => {
-      console.log(obs.body);
-    });
+    //TODO support more than youtube(1)
+    const values$ = await this.streamService.addEmbed(this.embedSiteId, this.token);
+    const embed: Embed | null = (await firstValueFrom(values$)).embed;
+
+    if(embed !== null)
+    {
+      this.router.navigate(["stream-page", embed.id]);
+    }
+
+
   }
 
 }

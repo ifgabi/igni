@@ -1,29 +1,23 @@
-* { padding: 0; margin: 0; }
-
-html body {
-  min-height: 100%;
+:host{
   height: 100%;
-}
-
-.main-div {
-  min-height: 100%;
-  height: 100%;
+  width: 100%;
+  /* left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px; */
 }
 
 .content-box {
   position: relative;
-  /* overflow: hidden; */
-  /* height: 100%;
+  overflow: hidden;
+  height: Calc(100% - 56px);
   width: 100%;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0; */
-  height:720px;
+  display: flex;
 }
 
 .content-stretch {
   position: relative;
+  width: 100%;
   display: flex;
   flex-direction: row;
 }
@@ -37,7 +31,6 @@ html body {
 
 .page-content {
   width: 100%;
-  display: table-cell;
   min-height: 100%;
   height: 100%;
 }

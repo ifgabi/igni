@@ -1,8 +1,6 @@
-<div class="chatbox-message-list">
-  <div *ngFor="let chatMessage of chatMessages">
-    <igni-chatline-element [chatMessage]="chatMessage"></igni-chatline-element>
-  </div>
-  <div class="chatbox-status-message">
-    {{this.statusMessage}}
-  </div>
+<div *ngFor="let chatMessage of chatMessages">
+  <igni-chatline-element [chatMessage]="chatMessage"></igni-chatline-element>
+</div>
+<div class="chatbox-status-message">
+  {{this.statusMessage}}
 </div>

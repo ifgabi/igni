@@ -1,5 +1,10 @@
-.chatbox-message-list {
+:host{
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 314px;
+}
+
+.chatbox-status-message{
+  background-color: cadetblue;
 }

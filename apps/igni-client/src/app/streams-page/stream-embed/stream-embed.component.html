@@ -6,7 +6,7 @@
         <div class="embed-memo">{{this.embed?.memo ?? "Embed memo is empty."}}</div>
       </div>
       <div *ngSwitchCase="'TWITCH_TOKEN'">
-          <img class="embed-preview-image" src=""/>
+          <img class="embed-preview-image" src="https://img.youtube.com/vi/{{this.embed?.token}}/0.jpg"/>
           <div class="embed-memo">{{this.embed?.memo ?? "Embed memo is empty."}}</div>
       </div>
       <div *ngSwitchDefault>Error</div>

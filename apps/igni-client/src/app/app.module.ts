@@ -22,6 +22,7 @@ import { CommonModule } from '@angular/common';
 import { StreamPageComponent } from './stream-page/stream-page.component';
 import { YoutubeurlPipe } from './stream-page/youtubeurl.pipe';
 import { StreamAddbarComponent } from './stream-addbar/stream-addbar.component';
+import { TwitchurlPipe } from './stream-page/twitchurl.pipe';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { StreamAddbarComponent } from './stream-addbar/stream-addbar.component';
     StreamEmbedComponent,
     StreamPageComponent,
     YoutubeurlPipe,
-    StreamAddbarComponent
+    StreamAddbarComponent,
+    TwitchurlPipe
   ],
   imports: [
     BrowserModule,

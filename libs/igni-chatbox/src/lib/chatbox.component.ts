@@ -109,9 +109,10 @@ export class ChatboxComponent implements OnInit, OnDestroy {
   onLogin(test: any)
   {
     this.showingLoginPrompt = false;
-    setTimeout(() => {
-      this.chatService.forceReconnect()
-    }, 2500);
+    //TODO find out why theres such a long delay on the stomp client to connect back to the ws
+    // setTimeout(() => {
+    //   this.chatService.forceReconnect()
+    // }, 2500);
   }
 
   onLogout(test: any)

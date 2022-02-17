@@ -1,10 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RecurseVisitor } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { Embed } from './data/Embed';
-import { EmbedRecv } from './data/EmbedRecv';
+import { firstValueFrom, Observable } from 'rxjs';
+import { StreamService } from '../stream/streamservice.service';
+import { Embed } from '../stream/data/Embed';
+import { EmbedRecv } from '../stream/data/EmbedRecv';
 import { loadStreamsContents } from './streams-content.actions';
 import { StreamsContentState } from './streams-content.reducer';
 import { selectAllEmbeds } from './streams-content.selectors';
@@ -17,36 +19,66 @@ import { selectAllEmbeds } from './streams-content.selectors';
 export class StreamsPageComponent implements OnInit {
 
   embeds$: Observable<Array<Embed>> = this.store.select(selectAllEmbeds);
+  numberOfPages: number;
+  currentPage: number;
 
   constructor(
     private store : Store<StreamsContentState>,
-    private http: HttpClient) {
-      this.refreshMilliseconds = 3000
+    private streamService: StreamService,
+    private activatedRoute: ActivatedRoute) {
+      this.loadMiliseconds = 1000
       this.refreshEmbeds = null;
+      this.numberOfPages = -1;
+      this.currentPage = 0;
+      this.pagesToShow = [];
     }
 
-  refreshMilliseconds: number;
+  loadMiliseconds: number;
   refreshEmbeds: any;
 
-  ngOnInit(): void {
-    this.refreshEmbeds = setInterval(() => {
+  pagesToShow: number[];
 
-      this.http.get("http://localhost:8080/streams/0",
+  async ngOnInit(): Promise<void> {
+    this.refreshEmbeds = setTimeout(() => {
+      const idstr: string = (this.activatedRoute.snapshot.paramMap.get("pageId")?.valueOf()) ?? "0";
+      const idnum: number = Number.parseInt(idstr);
+      this.loadEmbeds(idnum);
+    }, this.loadMiliseconds);
+  }
+
+  async loadEmbeds(page: number)
+  {
+    const recv$ = await this.streamService.getEmbeds(page);
+
+    firstValueFrom(recv$).then( recv => {
+      if(recv !== null)
       {
-        headers: new HttpHeaders(),
-        withCredentials: true,
-        responseType: 'json',
-        observe: 'response'
-      }).subscribe( observer => {
-        const recv: EmbedRecv | null = <EmbedRecv> (observer?.body ?? null);
-        if(recv !== null)
-        {
-          const embeds: Array<Embed> = recv.embeds;
-          this.store.dispatch(loadStreamsContents({ embeds }));
-        }
-      })
+        const embeds: Array<Embed> = recv.embeds;
+        this.numberOfPages = recv.numberOfPages;
+        this.currentPage = page;
+        this.makePagesToShow();
+        this.store.dispatch(loadStreamsContents({ embeds }));
+      }
+    });
+  }
 
-    }, this.refreshMilliseconds);
+  makePagesToShow(){
+    this.pagesToShow = [];
+    let prev = -2;
+    for(let i=0; i< this.numberOfPages; i++){
+      if((0 + i < 1 || this.numberOfPages - i < 2 ) || ( i > this.currentPage - 2 &&  i < this.currentPage + 4)){
+        this.pagesToShow.push(i);
+        prev = i;
+      }
+      else {
+        if( prev !== -1 )
+        {
+          prev = -1;
+          this.pagesToShow.push(prev);
+        }
+      }
+    }
+    return;
   }
 
   //TODO end timer on destroy

@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as StreamsContentActions from './streams-content.actions';
-import { Embed } from './data/Embed';
+import { Embed } from '../stream/data/Embed';
 // import { Chatline } from './chatbox-content.models';
 
 export const streamsContentFeatureKey = 'embeds';

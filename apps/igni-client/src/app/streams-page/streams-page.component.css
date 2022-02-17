@@ -1,5 +1,8 @@
-.streams-page{
+:host{
   position: relative;
   height: 100%;
   overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

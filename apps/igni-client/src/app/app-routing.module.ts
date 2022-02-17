@@ -9,6 +9,7 @@ import { StreamPageComponent } from './stream-page/stream-page.component';
 const routes: Routes = [
   { path: '', redirectTo: '/streams-page', pathMatch: 'full' },
   { path: 'streams-page', component: StreamsPageComponent },
+  { path: 'streams-page/:pageId', component: StreamsPageComponent },
   { path: 'login-page', component: LoginPageComponent },
   { path: 'signup-page', component: SignupPageComponent },
   { path: 'stream-page/:embedId', component: StreamPageComponent }

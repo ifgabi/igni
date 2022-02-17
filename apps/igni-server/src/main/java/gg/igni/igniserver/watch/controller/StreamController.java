@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,8 +35,9 @@ public class StreamController {
   public ResponseEntity<EmbedsSendDto> getStreams(@PathVariable int page) {
 
     EmbedsSendDto send = new EmbedsSendDto();
-    List<EmbedDto> embeds = embedService.getEmbedsForPage(page);
-    send.setEmbeds(embeds);
+    Page<EmbedDto> embeds = embedService.getEmbedsForPage(page);
+    send.setEmbeds(embeds.toList());
+    send.setNumberOfPages(embeds.getTotalPages());
 
     ResponseEntity<EmbedsSendDto> re = new ResponseEntity<EmbedsSendDto>(send, HttpStatus.OK);
     return re;
@@ -58,7 +60,6 @@ public class StreamController {
   @ResponseBody
   public ResponseEntity<EmbedSendDto> postStream(@RequestBody EmbedRecvDto embedRecvData)
   {
-    System.out.println("WE GOT HERE!");
     EmbedSendDto send = new EmbedSendDto();
     send.setEmbed(embedService.createOrGetEmbed(embedRecvData.getEmbedSiteId(), embedRecvData.getToken()));
 

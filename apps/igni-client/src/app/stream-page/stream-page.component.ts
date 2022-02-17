@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import { Embed } from './data/Embed';
-import { EmbedRecv } from './data/EmbedRecv';
+import { Embed } from '../stream/data/Embed';
+import { StreamService } from '../stream/streamservice.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'igni-stream-page',
@@ -14,35 +13,30 @@ export class StreamPageComponent implements OnInit {
 
   embed: Embed | null;
 
-  yturl: string;
+  url: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private http: HttpClient,
-    private sanitizer: DomSanitizer
+    private streamService: StreamService
     ){
       this.embed = null;
-      this.yturl = "";
-      return;
+      this.url = "";
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    const embed$ = await this.streamService.getEmbed(this.activatedRoute.snapshot.paramMap.get("embedId"));
 
-    this.http.get("http://localhost:8080/stream/" + this.activatedRoute.snapshot.paramMap.get("embedId"),
-    {
-      headers: new HttpHeaders(),
-      withCredentials: true,
-      responseType: 'json',
-      observe: 'response'
-    }).subscribe( observer => {
-      const recv: EmbedRecv | null = <EmbedRecv> (observer?.body ?? null);
-      this.embed = recv?.embed ?? null;
-
-      this.yturl = 'https://www.youtube.com/embed/' + this.embed?.token + '?autoplay=1';
-
+    firstValueFrom(embed$).then(recv => {
+      this.embed = recv.embed;
+      if(recv.embed.embedSite.code === "TWITCH_TOKEN")
+      {
+        this.url = 'https://player.twitch.tv/?channel=' + this.embed?.token + '&autoplay=true&parent=localhost';
+      }
+      if(recv.embed.embedSite.code === "YOUTUBE_TOKEN")
+      {
+        this.url = 'https://www.youtube.com/embed/' + this.embed?.token + '?autoplay=1';
+      }
     });
-
-    return;
   }
 
 }

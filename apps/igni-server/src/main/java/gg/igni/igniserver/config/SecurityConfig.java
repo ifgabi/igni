@@ -95,23 +95,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-    final CorsConfiguration configurationRest = new CorsConfiguration();
-    configurationRest.setExposedHeaders(Arrays.asList("Authorization"));
-    configurationRest.addAllowedOrigin("http://localhost:4200");
-    configurationRest.addAllowedMethod("*");
-    configurationRest.addAllowedHeader("*");
-    configurationRest.setAllowCredentials(true);
-    configurationRest.applyPermitDefaultValues();
-    source.registerCorsConfiguration("/**", configurationRest);
+    final CorsConfiguration configurationApi = new CorsConfiguration();
+    configurationApi.setExposedHeaders(Arrays.asList("Authorization"));
+    configurationApi.addAllowedOrigin("http://localhost:4200");
+    configurationApi.addAllowedMethod("*");
+    configurationApi.addAllowedHeader("*");
+    configurationApi.setAllowCredentials(true);
+    configurationApi.applyPermitDefaultValues();
+    source.registerCorsConfiguration("/**", configurationApi);
 
-    final CorsConfiguration configurationChat = new CorsConfiguration();
-    configurationChat.setExposedHeaders(Arrays.asList("Authorization"));
-    configurationChat.addAllowedOrigin("http://localhost:4200");
-    configurationChat.addAllowedMethod("*");
-    configurationChat.addAllowedHeader("*");
-    configurationChat.setAllowCredentials(true);
-    configurationChat.applyPermitDefaultValues();
-    source.registerCorsConfiguration("/chat-websocket/**", configurationChat);
+    final CorsConfiguration configurationWs = new CorsConfiguration();
+    configurationWs.setExposedHeaders(Arrays.asList("Authorization"));
+    configurationWs.addAllowedOrigin("http://localhost:4200");
+    configurationWs.addAllowedMethod("*");
+    configurationWs.addAllowedHeader("*");
+    configurationWs.setAllowCredentials(true);
+    configurationWs.applyPermitDefaultValues();
+    source.registerCorsConfiguration("/chat-websocket/**", configurationWs);
 
     return source;
 	}

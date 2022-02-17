@@ -83,12 +83,8 @@ export class AccountService {
   async isAuthenticatedInterval():Promise<void>
   {
     await this.authenticationUpdate();
-    //TODO emit invalid session
   }
 
-
-  //TODO Data/LoginDTO Data/LogoutDTO
-  //TODO NGRX stores of User interface instead of this.username:string
   authenticate(username:string, password:string) {
     this.http.post<HttpResponse<LoginResponse>>("http://localhost:8080" + '/login', {
         "username": username,

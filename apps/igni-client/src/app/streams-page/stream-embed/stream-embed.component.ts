@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Embed } from '../data/Embed';
+import { Embed } from '../../stream/data/Embed';
 
 @Component({
   selector: 'igni-stream-embed',

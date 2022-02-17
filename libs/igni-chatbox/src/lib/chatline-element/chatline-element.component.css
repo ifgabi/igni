@@ -1,9 +1,14 @@
+:host{
+  word-break: break-all;
+  white-space: normal;
+}
 .chatline-user {
   max-width: 80px;
   display: inline;
 }
 
 .chatline-text {
-  max-width: 260px;
+  max-width: 256px;
   display: inline;
+  white-space: pre-wrap;
 }
