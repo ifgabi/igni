@@ -10,3 +10,7 @@
 .message {
   font-size: x-large;
 }
+
+.clickable {
+  cursor: pointer;
+}

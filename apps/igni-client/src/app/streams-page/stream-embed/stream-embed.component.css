@@ -2,17 +2,27 @@
   position: relative;
   width: 300px;
   height: 250px;
-  background-color: white;
+  background-color: black;
   margin: 0px;
+
   border: 1px;
   border-style: solid;
-  border-color: black;
+  border-color: white;
 }
 
-.embed-preview-image{
+#TWITCH_TOKEN > .embed-preview-image{
   position: relative;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
+  transform: translateY(+41px);
+  height: 100%;
+  width: 100%;
+}
+
+#YOUTUBE_TOKEN > .embed-preview-image{
+  position: relative;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
 }
@@ -26,5 +36,6 @@
   padding-bottom: 0;
 
   text-align: center;
-  background-color: grey;
+  color: white;
+  background-color: black;
 }

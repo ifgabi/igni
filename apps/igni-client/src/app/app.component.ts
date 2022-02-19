@@ -24,8 +24,12 @@ export class AppComponent implements OnInit {
   logoutSubject: Subject<any>;
   sessioncheckSubject: Subject<boolean>;
 
+  user: string;
+
   constructor(public accountService: AccountService, public router:Router)
   {
+    this.user = "not yet";
+
     this.serverError = false;
     this.loginSubject = new Subject<any>();
     this.logoutSubject = new Subject<any>();

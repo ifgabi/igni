@@ -24,7 +24,7 @@ public class ChatHistoryController {
     ChatHistorySendDto respData = new ChatHistorySendDto();
     respData.setMessages(chatService.getLastMessages());
 
-    if(respData.getMessages().size() < 1)
+    if(respData.getMessages().size() < 0)
     {
       return new ResponseEntity(respData, HttpStatus.NOT_FOUND);
     }

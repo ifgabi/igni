@@ -2,7 +2,9 @@ package gg.igni.igniserver.account.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -14,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.servlet.http.HttpServletRequest;
 import javax.persistence.JoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -21,11 +24,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 @Entity
 @Table(name = "table_users")
-public class User implements UserDetails {
-	@Id
+public class User implements UserDetails, OAuth2User {
+
+  @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -50,6 +56,9 @@ public class User implements UserDetails {
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	@JsonBackReference
 	private Set<Role> roles;
+
+  @Transient
+  private Map<String, Object> attributes;
 
 	public Long getId() {
 		return id;
@@ -149,6 +158,23 @@ public class User implements UserDetails {
 		return isEnabled;
 	}
 
+  @Override
+  public Map<String, Object> getAttributes() {
+      if (this.attributes == null) {
+          this.attributes = new HashMap<>();
+          this.attributes.put("id", this.getId());
+          this.attributes.put("name", this.getName());
+          //this.attributes.put("login", this.getLogin());
+          this.attributes.put("email", this.getEmail());
+      }
+      return attributes;
+  }
+
+  @Override
+  public String getName() {
+    return this.username;//TODO username for now
+  }
+
   public Collection<? extends GrantedAuthority> getPrivilegesAsAuthorities() {
 		return getAuthorities(this.roles);
 	}
@@ -164,6 +190,9 @@ public class User implements UserDetails {
 
 		List<Privilege> privs = new ArrayList<>();
 
+    if(roles == null)
+      return null;
+
 		for(Role role : roles)
 			privs.addAll(role.getPrivileges());
 
@@ -176,6 +205,9 @@ public class User implements UserDetails {
 	private static Collection<? extends GrantedAuthority> getGrantedAuthoritiesStrings(List<String> privileges) {
 
 		List<GrantedAuthority> authorities = new ArrayList<>();
+
+    if(privileges == null)
+      return null;
 
 		for(String priv : privileges)
 			authorities.add(new SimpleGrantedAuthority(priv));

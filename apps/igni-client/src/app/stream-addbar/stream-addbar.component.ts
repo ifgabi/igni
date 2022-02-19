@@ -38,7 +38,8 @@ export class StreamAddbarComponent implements OnInit {
 
     if(embed !== null)
     {
-      this.router.navigate(["stream-page", embed.id]);
+      await this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+      this.router.navigate(["stream-page", embed.id]));
     }
 
 

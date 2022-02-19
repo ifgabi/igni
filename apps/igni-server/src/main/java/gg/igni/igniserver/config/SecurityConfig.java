@@ -1,6 +1,9 @@
 package gg.igni.igniserver.config;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,12 +16,22 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import gg.igni.igniserver.account.model.User;
+import gg.igni.igniserver.account.repositories.UserRepository;
+import gg.igni.igniserver.account.service.IgniOAuth2UserService;
 import gg.igni.igniserver.account.service.IgniUserDetailsService;
 
 @Configuration
@@ -32,6 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
 	private IgniUserDetailsService userDetailsService;
+
+  @Autowired
+  private IgniOAuth2UserService igniOAuth2UserService;
 
   @Override
   protected void configure(AuthenticationManagerBuilder authb) throws Exception
@@ -75,8 +91,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
       .and()
       .authorizeRequests()
-      .antMatchers(HttpMethod.POST, "/addstream").permitAll();
+      .antMatchers(HttpMethod.POST, "/addstream").permitAll()
 
+      .and()
+      .authorizeRequests()
+      .antMatchers(HttpMethod.GET, "/user").authenticated();
+
+      http.oauth2Login(oauth2Login ->
+      oauth2Login
+          .loginPage("/login/oauth2")
+          .authorizationEndpoint(authorizationEndpoint ->
+              authorizationEndpoint
+                  .baseUri("/login/oauth2/authorization")
+          )
+          .defaultSuccessUrl("http://localhost:4200", true)
+          .userInfoEndpoint()
+            .userService(this.igniOAuth2UserService)
+            .customUserType(User.class, "google")
+      );
 
       http.csrf().disable();
 

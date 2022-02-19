@@ -22,15 +22,14 @@
   flex-direction: row;
 }
 
-.parent-chatbar {
-  display: table-cell;
-  width: 330px;
+.page-content {
+  width: 100%;
   min-height: 100%;
   height: 100%;
 }
 
-.page-content {
-  width: 100%;
+.parent-chatbar {
+  width: 330px;
   min-height: 100%;
   height: 100%;
 }

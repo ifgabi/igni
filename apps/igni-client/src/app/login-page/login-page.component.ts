@@ -25,4 +25,10 @@ export class LoginPageComponent implements OnInit {
     this.accountService.authenticate( this.username, this.password );
   }
 
+  byUrl()
+  {
+    // /login/oauth2/authorization/google
+    window.location.href = "http://localhost:8080/login/oauth2/authorization/google";
+  }
+
 }
