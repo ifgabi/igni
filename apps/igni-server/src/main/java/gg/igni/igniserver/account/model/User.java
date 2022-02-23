@@ -21,6 +21,8 @@ import javax.persistence.JoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -164,7 +166,6 @@ public class User implements UserDetails, OAuth2User {
           this.attributes = new HashMap<>();
           this.attributes.put("id", this.getId());
           this.attributes.put("name", this.getName());
-          //this.attributes.put("login", this.getLogin());
           this.attributes.put("email", this.getEmail());
       }
       return attributes;
