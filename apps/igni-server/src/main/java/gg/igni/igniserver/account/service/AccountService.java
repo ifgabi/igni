@@ -18,6 +18,7 @@ import org.passay.PasswordData;
 import org.passay.PasswordValidator;
 import org.passay.RuleResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,7 +40,7 @@ import gg.igni.igniserver.account.data.UserDto;
 public class AccountService implements IAccountService {
 
   @Autowired
-	AuthProvider authProvider;
+	IgniAuthProvider igniAuthProvider;
 
   @Autowired
   UserRepository userRepository;
@@ -81,7 +82,7 @@ public class AccountService implements IAccountService {
   @Override
   public Optional<Authentication> loginAccount(String username, String password) {
     UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(username, password);
-		Authentication newauth = authProvider.authenticate(authReq);
+		Authentication newauth = igniAuthProvider.authenticate(authReq);
 
     return Optional.of(newauth);
   }

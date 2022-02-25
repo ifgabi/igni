@@ -21,6 +21,8 @@ import gg.igni.igniserver.watch.data.EmbedDto;
 import gg.igni.igniserver.watch.data.EmbedRecvDto;
 import gg.igni.igniserver.watch.data.EmbedSendDto;
 import gg.igni.igniserver.watch.data.EmbedsSendDto;
+import gg.igni.igniserver.watch.data.StreamHeartbeatRecvDto;
+import gg.igni.igniserver.watch.data.StreamHeartbeatSendDto;
 import gg.igni.igniserver.watch.service.EmbedService;
 
 
@@ -31,7 +33,6 @@ public class StreamController {
   private EmbedService embedService;
 
   @GetMapping(value="/streams/{page}")
-  @ResponseBody
   public ResponseEntity<EmbedsSendDto> getStreams(@PathVariable int page) {
 
     EmbedsSendDto send = new EmbedsSendDto();
@@ -45,7 +46,6 @@ public class StreamController {
 
 
   @GetMapping(value="/stream/{id}")
-  @ResponseBody
   public ResponseEntity<EmbedSendDto> getStream(@PathVariable Long id) {
 
     EmbedSendDto send = new EmbedSendDto();
@@ -57,7 +57,6 @@ public class StreamController {
   }
 
   @PostMapping(value="/addstream")
-  @ResponseBody
   public ResponseEntity<EmbedSendDto> postStream(@RequestBody EmbedRecvDto embedRecvData)
   {
     EmbedSendDto send = new EmbedSendDto();
@@ -65,6 +64,15 @@ public class StreamController {
 
     ResponseEntity<EmbedSendDto> resp = new ResponseEntity<EmbedSendDto>(send, HttpStatus.OK);
     return resp;
+  }
+
+  @PostMapping(value = "/heartbeatStream")
+  public ResponseEntity<StreamHeartbeatSendDto> postHeartbeatStream(@RequestBody StreamHeartbeatRecvDto streamHeartBeatRecv)
+  {
+
+    //viewservice viewrepository
+
+    return new ResponseEntity<StreamHeartbeatSendDto>(new StreamHeartbeatSendDto(), HttpStatus.OK);
   }
 
 }

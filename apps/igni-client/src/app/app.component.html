@@ -17,6 +17,10 @@
           <igni-stream-addbar></igni-stream-addbar>
         </li>
 
+      </ul>
+
+      <ul class="navbar-nav navbar-right">
+
         <li *ngIf="!this.accountService.authenticated" class="nav-item">
           <a [ngClass]="this.router.url.includes('/signup-page')?'nav-link active' : 'nav-link'" aria-current="page" href="#" routerLink="/signup-page">Signup</a>
         </li>
@@ -25,9 +29,6 @@
           <a [ngClass]="this.router.url.includes('/login-page')?'nav-link active' : 'nav-link'" aria-current="page" href="#" routerLink="/login-page">Login</a>
         </li>
 
-      </ul>
-
-      <ul class="navbar-nav navbar-right">
         <li class="nav-item dropdown" *ngIf="this.accountService.authenticated">
           <!-- [user]="this.accountService.currentUser" -->
           <igni-account-menu ></igni-account-menu>

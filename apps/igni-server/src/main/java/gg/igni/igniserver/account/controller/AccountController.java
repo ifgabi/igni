@@ -167,10 +167,4 @@ public class AccountController {
 		respDto.setUsername(username);
 		return new ResponseEntity<LoginResponseDto>(respDto, HttpStatus.OK);
 	}
-
-  @GetMapping("/user")
-  public String getUser(@AuthenticationPrincipal OAuth2User principal)
-  {
-    return principal.getAttribute("name");
-  }
 }

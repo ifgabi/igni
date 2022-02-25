@@ -1,9 +1,6 @@
 package gg.igni.igniserver.config;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,27 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import gg.igni.igniserver.account.model.User;
-import gg.igni.igniserver.account.repositories.UserRepository;
-import gg.igni.igniserver.account.service.IgniOAuth2UserService;
+import gg.igni.igniserver.account.service.IgniOAuth2UserDetailsService;
 import gg.igni.igniserver.account.service.IgniUserDetailsService;
 
 @Configuration
@@ -47,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private IgniUserDetailsService userDetailsService;
 
   @Autowired
-  private IgniOAuth2UserService igniOAuth2UserService;
+  private IgniOAuth2UserDetailsService igniOAuth2UserService;
 
   @Override
   protected void configure(AuthenticationManagerBuilder authb) throws Exception

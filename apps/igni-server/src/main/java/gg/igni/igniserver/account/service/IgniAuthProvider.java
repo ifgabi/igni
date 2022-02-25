@@ -12,7 +12,7 @@ import gg.igni.igniserver.account.model.User;
 import gg.igni.igniserver.account.repositories.UserRepository;
 
 @Component
-public class AuthProvider implements AuthenticationProvider {
+public class IgniAuthProvider implements AuthenticationProvider {
 
 	@Autowired
 	UserRepository userRepository;
