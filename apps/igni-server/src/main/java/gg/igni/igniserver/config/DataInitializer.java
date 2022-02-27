@@ -101,6 +101,14 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
       esYoutube.getEmbeds().add(ytEmbed);
       ytEmbed.setToken("GlV5sXdXPu4");
       ytEmbed.setMemo("This is a youtube embed!");
+      for(int i = 0; i < 120; i++)
+      {
+        Embed emb = new Embed();
+        emb.setEmbedSite(esYoutube);
+        emb.setToken("dummy_data" + i);
+        emb.setMemo("dummy_data" + i);
+        esYoutube.getEmbeds().add(emb);
+      }
 
       Embed ttvEmbed = new Embed();
       esTwitch.getEmbeds().add(ttvEmbed);
@@ -115,6 +123,8 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 
       ttvEmbed.setEmbedSite(esTwitch);
       embedRepository.save(ttvEmbed);
+
+      embedRepository.saveAll(esYoutube.getEmbeds());
 
       alreadySetup = true;
   }
