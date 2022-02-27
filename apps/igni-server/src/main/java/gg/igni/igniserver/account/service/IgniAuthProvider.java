@@ -8,8 +8,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import gg.igni.igniserver.account.model.User;
 import gg.igni.igniserver.account.repositories.UserRepository;
+import gg.igni.igniserver.model.User;
 
 @Component
 public class IgniAuthProvider implements AuthenticationProvider {

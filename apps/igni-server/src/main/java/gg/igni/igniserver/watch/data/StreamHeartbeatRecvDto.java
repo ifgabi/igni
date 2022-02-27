@@ -1,12 +1,15 @@
 package gg.igni.igniserver.watch.data;
 
 public class StreamHeartbeatRecvDto {
-  private Long streamId;
+  private Long embedId;
 
-  public Long getStreamId() {
-    return streamId;
+  public Long getEmbedId() {
+    return embedId;
   }
-  public void setStreamId(Long streamId) {
-    this.streamId = streamId;
+
+  public void setEmbedId(Long embedId) {
+    this.embedId = embedId;
   }
+
+
 }

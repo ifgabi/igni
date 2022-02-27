@@ -2,8 +2,6 @@ package gg.igni.igniserver.watch.data;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-
 public class EmbedsSendDto {
   private List<EmbedDto> embeds;
   private long numberOfPages;

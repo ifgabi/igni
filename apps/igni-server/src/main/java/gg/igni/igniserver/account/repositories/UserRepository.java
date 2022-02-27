@@ -2,10 +2,10 @@ package gg.igni.igniserver.account.repositories;
 
 import java.util.Optional;
 
-import gg.igni.igniserver.account.model.User;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import gg.igni.igniserver.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{

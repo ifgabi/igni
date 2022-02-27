@@ -1,4 +1,4 @@
-package gg.igni.igniserver.account.model;
+package gg.igni.igniserver.model;
 
 import java.util.Set;
 

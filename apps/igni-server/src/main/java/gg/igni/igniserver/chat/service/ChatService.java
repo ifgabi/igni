@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import gg.igni.igniserver.chat.data.ChatMessageDto;
-import gg.igni.igniserver.chat.model.ChatMessage;
 import gg.igni.igniserver.chat.repositories.ChatMessageRepository;
+import gg.igni.igniserver.model.ChatMessage;
 
 @Service
 public class ChatService {

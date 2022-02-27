@@ -11,16 +11,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import gg.igni.igniserver.account.model.Privilege;
-import gg.igni.igniserver.account.model.Role;
-import gg.igni.igniserver.account.model.User;
 import gg.igni.igniserver.account.repositories.PrivilegeRepository;
 import gg.igni.igniserver.account.repositories.RoleRepository;
 import gg.igni.igniserver.account.repositories.UserRepository;
-import gg.igni.igniserver.watch.model.Embed;
-import gg.igni.igniserver.watch.model.EmbedSite;
+import gg.igni.igniserver.model.Embed;
+import gg.igni.igniserver.model.EmbedSite;
+import gg.igni.igniserver.model.Privilege;
+import gg.igni.igniserver.model.Role;
+import gg.igni.igniserver.model.User;
 import gg.igni.igniserver.watch.repository.EmbedRepository;
-import gg.igni.igniserver.watch.repository.EmbedRepositoryPageable;
 import gg.igni.igniserver.watch.repository.EmbedSiteRepository;
 
 @Component

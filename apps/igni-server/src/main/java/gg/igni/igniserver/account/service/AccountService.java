@@ -18,23 +18,21 @@ import org.passay.PasswordData;
 import org.passay.PasswordValidator;
 import org.passay.RuleResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import gg.igni.igniserver.account.data.AccountConstraints.EmailConstraintErrorFlag;
+import gg.igni.igniserver.account.data.AccountConstraints;
 import gg.igni.igniserver.account.data.AccountConstraints.PasswordConstraintErrorFlag;
 import gg.igni.igniserver.account.data.AccountConstraints.UsernameConstraintErrorFlag;
-import gg.igni.igniserver.account.model.Privilege;
-import gg.igni.igniserver.account.model.Role;
-import gg.igni.igniserver.account.model.User;
+import gg.igni.igniserver.account.data.UserDto;
 import gg.igni.igniserver.account.repositories.PrivilegeRepository;
 import gg.igni.igniserver.account.repositories.RoleRepository;
 import gg.igni.igniserver.account.repositories.UserRepository;
-import gg.igni.igniserver.account.data.AccountConstraints;
-import gg.igni.igniserver.account.data.UserDto;
+import gg.igni.igniserver.model.Privilege;
+import gg.igni.igniserver.model.Role;
+import gg.igni.igniserver.model.User;
 
 @Service
 public class AccountService implements IAccountService {

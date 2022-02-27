@@ -1,4 +1,4 @@
-package gg.igni.igniserver.account.model;
+package gg.igni.igniserver.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,22 +12,19 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.servlet.http.HttpServletRequest;
-import javax.persistence.JoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 @Entity
 @Table(name = "table_users")
@@ -58,6 +55,9 @@ public class User implements UserDetails, OAuth2User {
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	@JsonBackReference
 	private Set<Role> roles;
+
+  @OneToMany(mappedBy = "primaryKey.user")
+  private Set<View> views;
 
   @Transient
   private Map<String, Object> attributes;
@@ -173,7 +173,7 @@ public class User implements UserDetails, OAuth2User {
 
   @Override
   public String getName() {
-    return this.username;//TODO username for now
+    return this.username;
   }
 
   public Collection<? extends GrantedAuthority> getPrivilegesAsAuthorities() {

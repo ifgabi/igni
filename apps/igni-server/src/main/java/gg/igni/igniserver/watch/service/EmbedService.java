@@ -1,13 +1,7 @@
 package gg.igni.igniserver.watch.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.modelmapper.Condition;
-import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,21 +9,19 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import gg.igni.igniserver.model.Embed;
+import gg.igni.igniserver.model.EmbedSite;
 import gg.igni.igniserver.watch.data.EmbedDto;
-import gg.igni.igniserver.watch.data.EmbedSendDto;
-import gg.igni.igniserver.watch.model.Embed;
-import gg.igni.igniserver.watch.model.EmbedSite;
 import gg.igni.igniserver.watch.repository.EmbedRepository;
 import gg.igni.igniserver.watch.repository.EmbedRepositoryPageable;
-import gg.igni.igniserver.watch.repository.EmbedSiteRepository;
 
 @Service
 public class EmbedService {
   @Autowired
   private EmbedRepositoryPageable embedRepositoryPageable;
 
-  @Autowired
-  private EmbedSiteRepository embedSiteRepository;
+  // @Autowired
+  // private EmbedSiteRepository embedSiteRepository;
 
   @Autowired
   private EmbedRepository embedRepository;

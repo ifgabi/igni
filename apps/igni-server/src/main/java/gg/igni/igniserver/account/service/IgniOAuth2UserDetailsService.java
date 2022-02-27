@@ -10,9 +10,9 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import gg.igni.igniserver.account.model.User;
 import gg.igni.igniserver.account.repositories.RoleRepository;
 import gg.igni.igniserver.account.repositories.UserRepository;
+import gg.igni.igniserver.model.User;
 
 @Service
 public class IgniOAuth2UserDetailsService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {

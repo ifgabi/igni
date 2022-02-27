@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { EmbedRecv } from './data/EmbedRecv';
 import { EmbedsRecv } from "./data/EmbedsRecv"
+import { HeartbeatRecv } from './data/HeartbeatRecv';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,24 @@ export class StreamService {
       map(
         (resp) => resp.body as EmbedsRecv
       )
+    );
+
+    return recv$;
+  }
+
+  public heartBeatView(embedId: number)
+  {
+    const recv$ = this.http.post("http://localhost:8080/heartbeatStream",
+    {
+      "embedId": embedId
+    },
+    {
+      headers: new HttpHeaders(),
+      withCredentials: true,
+      responseType: 'json',
+      observe: 'response'
+    }).pipe(
+      map(resp => resp.body as HeartbeatRecv)
     );
 
     return recv$;

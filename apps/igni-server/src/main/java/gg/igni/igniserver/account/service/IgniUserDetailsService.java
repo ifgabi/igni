@@ -1,7 +1,7 @@
 package gg.igni.igniserver.account.service;
 
-import gg.igni.igniserver.account.model.User;
 import gg.igni.igniserver.account.repositories.UserRepository;
+import gg.igni.igniserver.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

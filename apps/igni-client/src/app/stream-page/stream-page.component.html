@@ -1,15 +1,16 @@
 <div class="stream-embed-content" [ngSwitch]="this.embed?.embedSite?.code">
-  <div *ngSwitchCase="'YOUTUBE_TOKEN'">
+  <div #streamViewer *ngSwitchCase="'YOUTUBE_TOKEN'">
     <iframe class="stream-embed-viewing" [src]="url | youtubeurl" frameborder="0" allowfullscreen></iframe>
   </div>
-  <div *ngSwitchCase="'TWITCH_TOKEN'">
+  <div #streamViewer *ngSwitchCase="'TWITCH_TOKEN'">
     <iframe
       class="stream-embed-viewing"
       [src]="url | twitchurl"
       allowfullscreen="true">
     </iframe>
-
-    <!-- <div class="stream-embed-viewing" id="twitch-player"></div> -->
   </div>
   <div *ngSwitchDefault>Invalid stream.</div>
+  <div #streamViewerCount class="stream-viewer-count">
+    Viewers: {{this.viewCount === null ? 0 : this.viewCount}}
+  </div>
 </div>

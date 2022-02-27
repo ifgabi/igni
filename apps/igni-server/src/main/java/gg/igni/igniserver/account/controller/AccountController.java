@@ -13,16 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import gg.igni.igniserver.account.data.AccountConstraints;
 import gg.igni.igniserver.account.data.LoginRequestDto;
@@ -31,8 +28,8 @@ import gg.igni.igniserver.account.data.SessionHeartbeatResponseDto;
 import gg.igni.igniserver.account.data.SignUpRequestDto;
 import gg.igni.igniserver.account.data.SignUpResponseDto;
 import gg.igni.igniserver.account.data.UserDto;
-import gg.igni.igniserver.account.model.User;
 import gg.igni.igniserver.account.service.IAccountService;
+import gg.igni.igniserver.model.User;
 
 @Controller
 public class AccountController {
@@ -42,7 +39,6 @@ public class AccountController {
 	private IAccountService accountService;
 
 	@PostMapping("/signup")
-	@ResponseBody
 	public ResponseEntity<SignUpResponseDto> signup(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody SignUpRequestDto reqbody) throws NullPointerException {
 
@@ -105,7 +101,6 @@ public class AccountController {
 	// }
 
 	@GetMapping("/checksession")
-	@ResponseBody
 	public ResponseEntity<SessionHeartbeatResponseDto> checkSession(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -119,7 +114,6 @@ public class AccountController {
 	}
 
 	@PostMapping("/login")
-	@ResponseBody
 	public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequest, HttpServletRequest request) {
 		String username = loginRequest.getUsername();
 		String password = loginRequest.getPassword();
