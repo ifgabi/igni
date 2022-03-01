@@ -30,12 +30,17 @@
             "input": "./node_modules/jquery/dist/jquery.min.js",
             "inject": false,
             "bundleName": "jquery"
-           },
-           {
-             "input": "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-             "inject": false,
-             "bundleName": "bootstrap"
-           }
+          },
+          {
+            "input": "./node_modules/@popperjs/core/dist/umd/popper.min.js",
+            "inject": false,
+            "bundleName": "popper"
+          },
+          {
+            "input": "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+            "inject": false,
+            "bundleName": "bootstrap"
+          }
         ]
       },
       "configurations": {

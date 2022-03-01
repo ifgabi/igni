@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../account/accountservice.service';
+import { Router } from '@angular/router';
+import { Observable, tap } from 'rxjs';
+import { AccountService, UserDto } from '../account/accountservice.service';
 
 @Component({
   selector: 'igni-account-menu',
@@ -8,14 +10,16 @@ import { AccountService } from '../account/accountservice.service';
 })
 export class AccountMenuComponent implements OnInit {
 
-  // user: User | null;
+  currentUser$: Observable<UserDto | null>;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService,
+    public router: Router) {
     // this.user = null;
+    this.currentUser$ = this.accountService.authenticatedUpdateEvent.asObservable();
   }
 
   ngOnInit(): void {
-    return;
+    ;
   }
 
   logoutClicked()

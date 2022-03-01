@@ -6,6 +6,7 @@ export const myRxStompConfig: InjectableRxStompConfig = {
 
   // Headers
   // Typical keys: login, passcode, host
+  // I use JSESSIONID cookie via Spring Security validation
   connectHeaders: {
     // login: 'guest',
     // passcode: 'guest',
@@ -18,7 +19,7 @@ export const myRxStompConfig: InjectableRxStompConfig = {
   // Wait in milliseconds before attempting auto reconnect
   // Set to 0 to disable
   // Typical value 500 (500 milli seconds)
-  reconnectDelay: 200,
+  reconnectDelay: 1000,
 
   // Will log diagnostics on console
   // It can be quite verbose, not recommended in production

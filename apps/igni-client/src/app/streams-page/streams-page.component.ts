@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RecurseVisitor } from '@angular/compiler/src/i18n/i18n_ast';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { firstValueFrom, Observable } from 'rxjs';
@@ -16,7 +16,7 @@ import { selectAllEmbeds } from './streams-content.selectors';
   templateUrl: './streams-page.component.html',
   styleUrls: ['./streams-page.component.css']
 })
-export class StreamsPageComponent implements OnInit {
+export class StreamsPageComponent implements OnInit, OnDestroy {
 
   embeds$: Observable<Array<Embed>> = this.store.select(selectAllEmbeds);
   numberOfPages: number;
@@ -27,25 +27,28 @@ export class StreamsPageComponent implements OnInit {
     private streamService: StreamService,
     private activatedRoute: ActivatedRoute) {
       this.loadMiliseconds = 1000
-      this.refreshEmbeds = null;
+      this.refreshEmbeds = -1;
       this.numberOfPages = -1;
       this.currentPage = 0;
       this.pagesToShow = [];
     }
 
   loadMiliseconds: number;
-  refreshEmbeds: any;
+  refreshEmbeds: number;
 
   pagesToShow: number[];
 
   async ngOnInit(): Promise<void> {
-    this.refreshEmbeds = setTimeout(() => {
+    this.refreshEmbeds = window.setTimeout(() => {
       const idstr: string = (this.activatedRoute.snapshot.paramMap.get("pageId")?.valueOf()) ?? "0";
       const idnum: number = Number.parseInt(idstr);
       this.loadEmbeds(idnum);
     }, this.loadMiliseconds);
   }
 
+  ngOnDestroy(): void {
+      window.clearTimeout(this.refreshEmbeds);
+  }
   async loadEmbeds(page: number)
   {
     const recv$ = await this.streamService.getEmbeds(page);

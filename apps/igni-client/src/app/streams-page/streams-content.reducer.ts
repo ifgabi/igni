@@ -35,7 +35,8 @@ export const reducer = createReducer(
       // let stateNew : StreamsContentState = adapter.removeAll(state);
       if(embeds !== null)
       {
-        const stateNew = adapter.addMany(embeds, state);
+        let stateNew : StreamsContentState = adapter.removeAll(state);
+        stateNew = adapter.addMany(embeds, stateNew);
         return stateNew;
       }
       return state;

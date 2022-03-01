@@ -1,1 +1,11 @@
-<div class="chatline-user">{{ chatMessage?.user?.username ?? "empty" }}</div>:{{ chatMessage?.message ?? "empty" }}
+<div class="dropdown">
+  <a class="btn chatline-user" href="" role="button" id="userNameDropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+    {{ this.chatMessage?.user?.username ?? "empty" }}
+  </a>:{{ this.chatMessage?.message ?? "empty" }}
+
+  <ul class="dropdown-menu" aria-labelledby="userNameDropdownMenu">
+    <li><a class="dropdown-item" href="">Ignore</a></li>
+    <li><a class="dropdown-item" href="">Timeout</a></li>
+    <li><a class="dropdown-item" href="">Ban</a></li>
+  </ul>
+</div>

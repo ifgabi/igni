@@ -110,7 +110,11 @@ public class AccountController {
 		if(auth instanceof AnonymousAuthenticationToken)
       return new ResponseEntity<SessionHeartbeatResponseDto>(new SessionHeartbeatResponseDto(false), HttpStatus.OK);
 
-		return new ResponseEntity<SessionHeartbeatResponseDto>(new SessionHeartbeatResponseDto(true), HttpStatus.OK);
+    User user = (User) auth.getPrincipal();
+    SessionHeartbeatResponseDto dto = new SessionHeartbeatResponseDto(true);
+    ModelMapper mm = new ModelMapper();
+    dto.setUser(mm.map(user, UserDto.class));
+		return new ResponseEntity<SessionHeartbeatResponseDto>(dto, HttpStatus.OK);
 	}
 
 	@PostMapping("/login")

@@ -40,8 +40,13 @@ export class AppComponent implements OnInit {
   {
     this.loginEventSubscription = this.accountService.loginEvent.subscribe(this.loginSetup.bind(this));
     this.logoutEventSubscription = this.accountService.logoutEvent.subscribe(this.logoutSetup.bind(this));
-    this.authenticatedUpdateEventSubscription = this.accountService.authenticatedUpdateEvent.subscribe(this.authenticatedUpdateSetup.bind(this));
     this.serverUnresponsiveEventSubscription = this.accountService.serverUnresponsiveEvent.subscribe(this.serverUnresponsiveSetup.bind(this));
+    this.authenticatedUpdateEventSubscription = this.accountService.authenticatedUpdateEvent.subscribe(
+      (userDto) => {
+        this.authenticatedUpdateSetup(userDto !== null);
+      }
+    );
+
   }
 
   authenticatedUpdateSetup(authenticated: boolean)
@@ -67,7 +72,7 @@ export class AppComponent implements OnInit {
     //lets reload page now that we've got connection
     if(this.serverError)
     {
-      window.location.reload();
+      //window.location.reload();
     }
 
   }

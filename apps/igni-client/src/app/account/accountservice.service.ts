@@ -1,5 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { LocalStorageService } from 'ngx-webstorage';
 
 export interface LoginResponse{
   username: string;
@@ -18,7 +20,6 @@ export interface UserDto{
   username:string;
   email:string;
   roles:Array<RoleDto>;
-  channels:Array<ChannelDto>;
 }
 
 export interface RoleDto{
@@ -55,7 +56,7 @@ export class AccountService {
   logoutEvent:EventEmitter<boolean> = new EventEmitter();
 
   //Event when authentication is pooled
-  authenticatedUpdateEvent:EventEmitter<boolean> = new EventEmitter();
+  authenticatedUpdateEvent:Subject<UserDto | null> = new Subject();
 
   //Event when server is unresponsive
   serverUnresponsiveEvent:EventEmitter<boolean> = new EventEmitter();
@@ -65,19 +66,23 @@ export class AccountService {
   signupEmailErrorEvent:EventEmitter<string> = new EventEmitter();
 
   //TODO make use of currentuser
-  currentUser: UserDto | null;
+  currentUser: UserDto | null = null;
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   authenticated: boolean = false;
 
   username: string | null | undefined;
 
-  pollingInterval:number | null | undefined;
-
-  constructor(private http: HttpClient) {
-    this.currentUser = null;
+  pollingInterval:number;
+  constructor(private http: HttpClient,
+    private localStorage:LocalStorageService) {
 
     this.pollingInterval = window.setInterval(this.isAuthenticatedInterval.bind(this), 5000);
     this.isAuthenticatedInterval();
+
+    this.currentUser = localStorage.retrieve("currentUser");
+    this.authenticatedUpdateEvent.subscribe((userDto) => {
+      localStorage.store("currentUser", userDto);
+    });
   }
 
   async isAuthenticatedInterval():Promise<void>
@@ -86,6 +91,11 @@ export class AccountService {
   }
 
   authenticate(username:string, password:string) {
+    if(this.currentUser !== null)
+    {
+      this.authenticatedUpdateEvent.next(this.currentUser);
+      return;
+    }
     this.http.post<HttpResponse<LoginResponse>>("http://localhost:8080" + '/login', {
         "username": username,
         "password": password
@@ -102,7 +112,7 @@ export class AccountService {
           this.authenticated = true;
           this.username = lr.username;
           this.currentUser = lr.userData;
-
+          this.authenticatedUpdateEvent.next(this.currentUser);
           this.loginEvent.emit(true);
       }
       if(!logged)
@@ -110,6 +120,8 @@ export class AccountService {
         this.authenticated = false;
         this.username = null;
         this.currentUser = null;
+
+        this.authenticatedUpdateEvent.next(this.currentUser);
 
         this.loginEvent.emit(false);
       }
@@ -131,10 +143,13 @@ export class AccountService {
       if(status === 200)
       {
         this.authenticated = false;
+        this.currentUser = null;
+        this.authenticatedUpdateEvent.next(null);
         this.logoutEvent.emit(true);
       }
       else
       {
+        // this.authenticatedUpdateEvent.next(this.currentUser);
         this.logoutEvent.emit(false);
       }
     });
@@ -156,6 +171,7 @@ export class AccountService {
     catch(error)
     {
       this.serverUnresponsiveEvent.emit(true);
+      this.authenticatedUpdateEvent.next(null);
       return;
     }
 
@@ -163,17 +179,19 @@ export class AccountService {
     if(statusCode !== 200)
     {
       this.serverUnresponsiveEvent.emit(true);
+      this.authenticatedUpdateEvent.next(null);
       return;
     }
 
     const body: any = buffer?.body ?? null;
 
     const authed: boolean = body?.alive ?? false;
+    const userdto: UserDto | null = body?.user ?? null;
     this.authenticated = authed;
-    this.authenticatedUpdateEvent.emit(authed);
+    this.currentUser = userdto;
+    this.authenticatedUpdateEvent.next(authed === false? null : this.currentUser);
   }
 
-  //TODO signUpDTO
   signUp(username: string, email: string, password: string)
   {
     this.http.post<HttpResponse<SignupResponse>>("http://localhost:8080" + "/signup", {
@@ -192,6 +210,8 @@ export class AccountService {
         {
           this.authenticated = true;
           this.username = bodyresp.userData.username;
+          this.currentUser = bodyresp.userData;
+          this.authenticatedUpdateEvent.next(this.currentUser);
 
           this.loginEvent.emit(true);
           return;

@@ -82,7 +82,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
       User user1 = new User();
       user1.setUsername("user1");
       user1.setPasswordHash(passwordEncoder.encode("user1"));
-      user1.setEmail("sawpdawge@gmail.com");
+      user1.setEmail("user1@gmail.com");
       user1.setRoles(new HashSet<>(Arrays.asList(userRole)));
       user1.setEnabled(true);
       userRepository.save(user1);

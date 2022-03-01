@@ -24,6 +24,8 @@ import { YoutubeurlPipe } from './stream-page/youtubeurl.pipe';
 import { StreamAddbarComponent } from './stream-addbar/stream-addbar.component';
 import { TwitchurlPipe } from './stream-page/twitchurl.pipe';
 
+import {NgxWebstorageModule} from 'ngx-webstorage';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +52,8 @@ import { TwitchurlPipe } from './stream-page/twitchurl.pipe';
       fromStreamsContent.reducer
     ),
     EffectsModule.forRoot([]),
-    EffectsModule.forFeature([StreamsContentEffects])
+    EffectsModule.forFeature([StreamsContentEffects]),
+    NgxWebstorageModule.forRoot()
   ],
   providers: [AccountService],
   bootstrap: [AppComponent],

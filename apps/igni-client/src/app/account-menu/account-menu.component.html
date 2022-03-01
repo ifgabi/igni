@@ -1,11 +1,17 @@
-<a class="nav-link logout-button" (click)="this.logoutClicked()">Logout</a>
-<!-- <a class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-  admin
-  {{this.user.username}}
+<!-- <a class="nav-link logout-button" (click)="this.logoutClicked()">Logout</a> -->
+<a class="nav-link dropdown-toggle" id="userMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  {{(this.currentUser$ | async)?.username ?? "Menu"}}
 </a>
-<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
-  <li><a class="dropdown-item" href="#">Profile</a></li>
-  <li><a class="dropdown-item" href="#">Settings</a></li>
-  <li><hr class="dropdown-divider"></li>
-  <li><a class="dropdown-item" href="#">Logout</a></li>
-</ul> -->
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuDropdown">
+  <li *ngIf="(this.currentUser$ | async) === null" class="nav-item">
+    <a [ngClass]="this.router.url.includes('/signup-page')?'nav-link active' : 'nav-link'" aria-current="page" href="#" routerLink="/signup-page">Signup</a>
+  </li>
+  <li *ngIf="(this.currentUser$ | async) === null" class="nav-item">
+    <a [ngClass]="this.router.url.includes('/login-page')?'nav-link active' : 'nav-link'" aria-current="page" href="#" routerLink="/login-page">Login</a>
+  </li>
+  <li class="nav-item dropdown" *ngIf="(this.currentUser$ | async) !== null">
+    <a class="dropdown-item">Profile</a>
+    <hr class="dropdown-divider">
+    <a class="dropdown-item logout-button" (click)="this.logoutClicked()">Logout</a>
+  </li>
+</ul>
