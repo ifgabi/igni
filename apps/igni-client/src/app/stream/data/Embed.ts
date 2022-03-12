@@ -5,4 +5,6 @@ export interface Embed{
   memo: string;
   token: string;
   embedSite: EmbedSite;
+  viewCount: number;
+  timeoutBumpDate: Date;
 }

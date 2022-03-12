@@ -49,6 +49,7 @@ export class StreamsPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
       window.clearTimeout(this.refreshEmbeds);
   }
+
   async loadEmbeds(page: number)
   {
     const recv$ = await this.streamService.getEmbeds(page);
@@ -83,7 +84,5 @@ export class StreamsPageComponent implements OnInit, OnDestroy {
     }
     return;
   }
-
-  //TODO end timer on destroy
 
 }

@@ -14,8 +14,7 @@ import gg.igni.igniserver.model.View;
 @Repository
 public interface ViewRepository extends JpaRepository<View, Long>{
 
-  @Query(value = "SELECT COUNT(v.primaryKey.user.id) FROM View AS v WHERE v.primaryKey.embed.id = :embedId AND v.lastUpdate > :minDate GROUP BY v.primaryKey.embed.id",
-    nativeQuery = false)
+  @Query(value = "SELECT COUNT(v.primaryKey.user.id) FROM View AS v WHERE v.primaryKey.embed.id = :embedId AND v.lastUpdate > :minDate GROUP BY v.primaryKey.embed.id")
   public Optional<Integer> getViewCount(@Param("embedId") Long embedId, @Param("minDate") Date minDate);
 
   @Modifying
@@ -24,6 +23,7 @@ public interface ViewRepository extends JpaRepository<View, Long>{
   public void updateLastUpdate(@Param("embedId") Long embedId, @Param("userId") Long userId);
 
   @Modifying
-  @Query(value = "DELETE FROM igni.table_views WHERE TIMESTAMPDIFF(SECOND, last_update, NOW()) > 30;", nativeQuery = true)
+  @Query(value = "DELETE FROM igni.table_views WHERE TIMESTAMPDIFF(SECOND, last_update, NOW()) > 30;",
+    nativeQuery = true)
   public void cleanupViews();
 }

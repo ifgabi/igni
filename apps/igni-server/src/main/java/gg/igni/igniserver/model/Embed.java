@@ -1,7 +1,9 @@
 package gg.igni.igniserver.model;
 
-import java.util.Set;
+import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="table_embeds")
@@ -28,7 +33,13 @@ public class Embed {
   private String memo;
 
   @OneToMany(mappedBy = "primaryKey.embed")
-  private Set<View> views;
+  private List<View> views;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date timeoutBumpDate;
+
+  @Transient
+  private Long viewCount;
 
   public Long getId() {
     return id;
@@ -61,6 +72,31 @@ public class Embed {
   public void setMemo(String memo) {
     this.memo = memo;
   }
+
+  public List<View> getViews() {
+    return views;
+  }
+
+  public void setViews(List<View> views) {
+    this.views = views;
+  }
+
+  public Long getViewCount() {
+    return viewCount;
+  }
+
+  public void setViewCount(Long viewCount) {
+    this.viewCount = viewCount;
+  }
+
+  public Date getTimeoutBumpDate() {
+    return timeoutBumpDate;
+  }
+
+  public void setTimeoutBumpDate(Date timeoutBumpDate) {
+    this.timeoutBumpDate = timeoutBumpDate;
+  }
+
 
 
 }

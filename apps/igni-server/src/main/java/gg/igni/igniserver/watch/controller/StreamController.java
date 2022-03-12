@@ -1,5 +1,9 @@
 package gg.igni.igniserver.watch.controller;
 
+import java.sql.Time;
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
@@ -17,14 +21,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import gg.igni.igniserver.account.repositories.UserRepository;
+import gg.igni.igniserver.model.Embed;
 import gg.igni.igniserver.model.User;
+import gg.igni.igniserver.model.View;
+import gg.igni.igniserver.model.ViewKey;
 import gg.igni.igniserver.watch.data.EmbedDto;
 import gg.igni.igniserver.watch.data.EmbedRecvDto;
 import gg.igni.igniserver.watch.data.EmbedSendDto;
 import gg.igni.igniserver.watch.data.EmbedsSendDto;
 import gg.igni.igniserver.watch.data.StreamHeartbeatRecvDto;
 import gg.igni.igniserver.watch.data.StreamHeartbeatSendDto;
+import gg.igni.igniserver.watch.repository.EmbedRepository;
+import gg.igni.igniserver.watch.repository.ViewRepository;
 import gg.igni.igniserver.watch.service.EmbedService;
 import gg.igni.igniserver.watch.service.ViewService;
 
@@ -92,6 +104,14 @@ public class StreamController {
     data.setCount(viewService.getViewCount(streamHeartBeatRecv.getEmbedId()).orElse(0));
 
     return new ResponseEntity<StreamHeartbeatSendDto>(data, HttpStatus.OK);
+  }
+
+  @GetMapping(value="/testData/{id}")
+  @Transactional
+  @ResponseBody
+  public boolean testData(@PathVariable(name = "id") Long id)
+  {
+    return viewService.testData(id);
   }
 
 }

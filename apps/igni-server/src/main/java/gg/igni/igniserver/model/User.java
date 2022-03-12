@@ -57,7 +57,7 @@ public class User implements UserDetails, OAuth2User {
 	private Set<Role> roles;
 
   @OneToMany(mappedBy = "primaryKey.user")
-  private Set<View> views;
+  private List<View> views;
 
   @Transient
   private Map<String, Object> attributes;
