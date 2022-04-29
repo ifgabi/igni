@@ -13,7 +13,6 @@ export class StreamscollectionComponent implements OnInit {
   constructor() { return; }
 
   ngOnInit(): void {
-    console.log(JSON.stringify(this.embeds));
     return;
   }
 

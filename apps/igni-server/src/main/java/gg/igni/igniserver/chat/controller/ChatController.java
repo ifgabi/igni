@@ -10,8 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import gg.igni.igniserver.chat.data.ChatMessageDto;
-import gg.igni.igniserver.chat.data.ChatMessageRecvDto;
-import gg.igni.igniserver.chat.data.ChatMessageSendDto;
+import gg.igni.igniserver.chat.data.ChatMessageReqDto;
+import gg.igni.igniserver.chat.data.ChatMessageRespDto;
 import gg.igni.igniserver.chat.data.UserDto;
 import gg.igni.igniserver.chat.service.ChatService;
 import gg.igni.igniserver.model.User;
@@ -25,13 +25,13 @@ public class ChatController {
   // @PreAuthorize("hasAuthority('PRIVILEGE_CHAT_USAGE')")
 	@MessageMapping("/sendToChannel")
 	@SendTo("/channel")
-	public ChatMessageSendDto sendMessage(@RequestBody ChatMessageRecvDto msgr,
+	public ChatMessageRespDto sendMessage(@RequestBody ChatMessageReqDto msgr,
 			SimpMessageHeaderAccessor headerAccessor, Authentication auth) throws Exception {
 
     User user = (User) auth.getPrincipal();
     if(user != null)
     {
-      ChatMessageSendDto sendDto = new ChatMessageSendDto();
+      ChatMessageRespDto sendDto = new ChatMessageRespDto();
 
       ChatMessageDto cmdto = new ChatMessageDto();
       cmdto.setId(-1l);

@@ -1,6 +1,6 @@
 package gg.igni.igniserver.watch.data;
 
-public class StreamHeartbeatRecvDto {
+public class StreamHeartbeatReqDto {
   private Long embedId;
 
   public Long getEmbedId() {

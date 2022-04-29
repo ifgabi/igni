@@ -1,11 +1,14 @@
 package gg.igni.igniserver.account.service;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 import gg.igni.igniserver.account.repositories.UserRepository;
@@ -14,8 +17,11 @@ import gg.igni.igniserver.model.User;
 @Component
 public class IgniAuthProvider implements AuthenticationProvider {
 
-	@Autowired
-	UserRepository userRepository;
+  @Resource
+  private IgniUserDetailsService igniUserDetailsService;
+
+	// @Autowired
+	// private UserRepository userRepository;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
@@ -27,7 +33,8 @@ public class IgniAuthProvider implements AuthenticationProvider {
       String name = authentication.getName();
       String password = authentication.getCredentials().toString();
 
-      User user = userRepository.findByUsername(name).orElse(null);
+      // User user = userRepository.findByUsername(name).orElse(null);
+      User user = (User) igniUserDetailsService.loadUserByUsername(name);
 
       if (user == null)
         return null;
@@ -35,9 +42,9 @@ public class IgniAuthProvider implements AuthenticationProvider {
       if(passwordEncoder.matches(password, user.getPasswordHash()))
       {
         //return a new UserPasswordAuthenticationToken
-          UsernamePasswordAuthenticationToken newToken = new UsernamePasswordAuthenticationToken(name, password);
-          newToken.setDetails(user);
-          return newToken;
+        UsernamePasswordAuthenticationToken newToken = new UsernamePasswordAuthenticationToken(name, password);
+        newToken.setDetails(user);
+        return newToken;
       }
 
       return null;

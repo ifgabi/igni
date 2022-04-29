@@ -30,11 +30,11 @@ import gg.igni.igniserver.model.User;
 import gg.igni.igniserver.model.View;
 import gg.igni.igniserver.model.ViewKey;
 import gg.igni.igniserver.watch.data.EmbedDto;
-import gg.igni.igniserver.watch.data.EmbedRecvDto;
-import gg.igni.igniserver.watch.data.EmbedSendDto;
-import gg.igni.igniserver.watch.data.EmbedsSendDto;
-import gg.igni.igniserver.watch.data.StreamHeartbeatRecvDto;
-import gg.igni.igniserver.watch.data.StreamHeartbeatSendDto;
+import gg.igni.igniserver.watch.data.EmbedReqDto;
+import gg.igni.igniserver.watch.data.EmbedRespDto;
+import gg.igni.igniserver.watch.data.EmbedsRespDto;
+import gg.igni.igniserver.watch.data.StreamHeartbeatReqDto;
+import gg.igni.igniserver.watch.data.StreamHeartbeatRespDto;
 import gg.igni.igniserver.watch.repository.EmbedRepository;
 import gg.igni.igniserver.watch.repository.ViewRepository;
 import gg.igni.igniserver.watch.service.EmbedService;
@@ -51,44 +51,44 @@ public class StreamController {
   private ViewService viewService;
 
   @GetMapping(value="/streams/{page}")
-  public ResponseEntity<EmbedsSendDto> getStreams(@PathVariable int page) {
+  public ResponseEntity<EmbedsRespDto> getStreams(@PathVariable int page) {
 
-    EmbedsSendDto send = new EmbedsSendDto();
+    EmbedsRespDto send = new EmbedsRespDto();
     Page<EmbedDto> embeds = embedService.getEmbedsForPage(page);
     send.setEmbeds(embeds.toList());
     send.setNumberOfPages(embeds.getTotalPages());
 
-    ResponseEntity<EmbedsSendDto> re = new ResponseEntity<EmbedsSendDto>(send, HttpStatus.OK);
+    ResponseEntity<EmbedsRespDto> re = new ResponseEntity<EmbedsRespDto>(send, HttpStatus.OK);
     return re;
   }
 
 
   @GetMapping(value="/stream/{id}")
-  public ResponseEntity<EmbedSendDto> getStream(@PathVariable Long id) {
+  public ResponseEntity<EmbedRespDto> getStream(@PathVariable Long id) {
 
-    EmbedSendDto send = new EmbedSendDto();
+    EmbedRespDto send = new EmbedRespDto();
     EmbedDto embed = embedService.getEmbedForId(id);
     send.setEmbed(embed);
 
-    ResponseEntity<EmbedSendDto> re = new ResponseEntity<EmbedSendDto>(send, HttpStatus.OK);
+    ResponseEntity<EmbedRespDto> re = new ResponseEntity<EmbedRespDto>(send, HttpStatus.OK);
     return re;
   }
 
   @PostMapping(value="/addstream")
-  public ResponseEntity<EmbedSendDto> postStream(@RequestBody EmbedRecvDto embedRecvData)
+  public ResponseEntity<EmbedRespDto> postStream(@RequestBody EmbedReqDto embedRecvData)
   {
-    EmbedSendDto send = new EmbedSendDto();
+    EmbedRespDto send = new EmbedRespDto();
     send.setEmbed(embedService.createOrGetEmbed(embedRecvData.getEmbedSiteId(), embedRecvData.getToken()));
 
-    ResponseEntity<EmbedSendDto> resp = new ResponseEntity<EmbedSendDto>(send, HttpStatus.OK);
+    ResponseEntity<EmbedRespDto> resp = new ResponseEntity<EmbedRespDto>(send, HttpStatus.OK);
     return resp;
   }
 
   @PostMapping(value = "/heartbeatStream")
   @Transactional
-  public ResponseEntity<StreamHeartbeatSendDto> postHeartbeatStream(@RequestBody StreamHeartbeatRecvDto streamHeartBeatRecv, HttpServletRequest request)
+  public ResponseEntity<StreamHeartbeatRespDto> postHeartbeatStream(@RequestBody StreamHeartbeatReqDto streamHeartBeatRecv, HttpServletRequest request)
   {
-    StreamHeartbeatSendDto data = new StreamHeartbeatSendDto();
+    StreamHeartbeatRespDto data = new StreamHeartbeatRespDto();
 
     SecurityContext sc = SecurityContextHolder.getContext();
 		Authentication auth = sc.getAuthentication();
@@ -103,15 +103,7 @@ public class StreamController {
 
     data.setCount(viewService.getViewCount(streamHeartBeatRecv.getEmbedId()).orElse(0));
 
-    return new ResponseEntity<StreamHeartbeatSendDto>(data, HttpStatus.OK);
-  }
-
-  @GetMapping(value="/testData/{id}")
-  @Transactional
-  @ResponseBody
-  public boolean testData(@PathVariable(name = "id") Long id)
-  {
-    return viewService.testData(id);
+    return new ResponseEntity<StreamHeartbeatRespDto>(data, HttpStatus.OK);
   }
 
 }

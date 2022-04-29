@@ -82,7 +82,7 @@ public class AccountService implements IAccountService {
     UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(username, password);
 		Authentication newauth = igniAuthProvider.authenticate(authReq);
 
-    return Optional.of(newauth);
+    return Optional.ofNullable(newauth);
   }
 
   @Override
@@ -190,6 +190,26 @@ public class AccountService implements IAccountService {
           roleRepository.save(role);
       }
       return role;
+  }
+
+  @Override
+  public Optional<UserDto> setupProfile(String username, String newUsername) {
+    Optional<User> user = userRepository.findByUsername(username);
+
+    if(user.isEmpty())
+    {
+      return Optional.of(null);
+    }
+
+    if(user.isPresent())
+    {
+      ModelMapper mm = new ModelMapper();
+      user.get().setUsername(newUsername);
+      user = Optional.of(userRepository.save(user.get()));
+      return Optional.of(mm.map(user.get(), UserDto.class));
+    }
+
+    return Optional.of(null);
   }
 
 }

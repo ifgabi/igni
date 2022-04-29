@@ -6,7 +6,7 @@ import gg.igni.igniserver.account.data.AccountConstraints.EmailConstraintErrorFl
 import gg.igni.igniserver.account.data.AccountConstraints.PasswordConstraintErrorFlag;
 import gg.igni.igniserver.account.data.AccountConstraints.UsernameConstraintErrorFlag;
 
-public class SignUpResponseDto {
+public class SignUpRespDto {
 
     private UserDto userData;
     private List<UsernameConstraintErrorFlag> usernameErrorFlags;

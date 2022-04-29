@@ -1,6 +1,6 @@
 package gg.igni.igniserver.account.data;
 
-public class LoginResponseDto {
+public class LoginRespDto {
     private String username;
     private UserDto userData;
 

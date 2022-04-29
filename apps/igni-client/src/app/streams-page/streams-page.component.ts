@@ -26,7 +26,7 @@ export class StreamsPageComponent implements OnInit, OnDestroy {
     private store : Store<StreamsContentState>,
     private streamService: StreamService,
     private activatedRoute: ActivatedRoute) {
-      this.loadMiliseconds = 1000
+      this.loadMiliseconds = 0;
       this.refreshEmbeds = -1;
       this.numberOfPages = -1;
       this.currentPage = 0;

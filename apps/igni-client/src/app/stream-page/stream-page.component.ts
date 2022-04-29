@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Embed } from '../stream/data/Embed';
 import { StreamService } from '../stream/streamservice.service';
@@ -37,6 +37,7 @@ export class StreamPageComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     window.clearInterval(this.heartbeatInterval);
+    this.streamService.currentPageViewsChanged.next(null);
   }
 
   ngDoCheck(): void {

@@ -1,6 +1,6 @@
 package gg.igni.igniserver.watch.data;
 
-public class EmbedSendDto {
+public class EmbedRespDto {
   private EmbedDto embed;
 
   public EmbedDto getEmbed() {

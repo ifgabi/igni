@@ -50,10 +50,9 @@ export interface ChanneluserDto{
 export class AccountService {
 
   //Event when user logged is attempted
-  loginEvent:EventEmitter<boolean> = new EventEmitter();
-
+  loginEvent:Subject<boolean> = new EventEmitter();
   //Event when logged out is attempted
-  logoutEvent:EventEmitter<boolean> = new EventEmitter();
+  logoutEvent:Subject<boolean> = new EventEmitter();
 
   //Event when authentication is pooled
   authenticatedUpdateEvent:Subject<UserDto | null> = new Subject();
@@ -107,23 +106,23 @@ export class AccountService {
     } ).subscribe( (resp: HttpResponse<object>) => {
       const lr: LoginResponse = resp.body as LoginResponse;
       const logged: boolean = lr.userData !== null;
+
+      console.log("LOGGED" + lr);
       if(logged)
       {
           this.authenticated = true;
           this.username = lr.username;
           this.currentUser = lr.userData;
           this.authenticatedUpdateEvent.next(this.currentUser);
-          this.loginEvent.emit(true);
+          this.loginEvent.next(true);
       }
       if(!logged)
       {
         this.authenticated = false;
         this.username = null;
         this.currentUser = null;
-
         this.authenticatedUpdateEvent.next(this.currentUser);
-
-        this.loginEvent.emit(false);
+        this.loginEvent.next(false);
       }
     });
   }
@@ -145,12 +144,12 @@ export class AccountService {
         this.authenticated = false;
         this.currentUser = null;
         this.authenticatedUpdateEvent.next(null);
-        this.logoutEvent.emit(true);
+        this.logoutEvent.next(true);
       }
       else
       {
         // this.authenticatedUpdateEvent.next(this.currentUser);
-        this.logoutEvent.emit(false);
+        this.logoutEvent.next(false);
       }
     });
 
@@ -213,7 +212,7 @@ export class AccountService {
           this.currentUser = bodyresp.userData;
           this.authenticatedUpdateEvent.next(this.currentUser);
 
-          this.loginEvent.emit(true);
+          this.loginEvent.next(true);
           return;
         }
 

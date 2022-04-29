@@ -15,7 +15,7 @@ import gg.igni.igniserver.account.repositories.UserRepository;
 import gg.igni.igniserver.model.User;
 
 @Service
-public class IgniOAuth2UserDetailsService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+public class IgniOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
   @Autowired
   private UserRepository userRepository;

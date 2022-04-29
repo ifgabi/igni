@@ -1,6 +1,6 @@
 package gg.igni.igniserver.chat.data;
 
-public class ChatMessageSendDto {
+public class ChatMessageRespDto {
 
   private ChatMessageDto chatMessage;
 

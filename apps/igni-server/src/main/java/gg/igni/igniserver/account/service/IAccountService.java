@@ -16,4 +16,5 @@ public interface IAccountService {
   List<UsernameConstraintErrorFlag> checkUsernameConstraints(String username);
   List<PasswordConstraintErrorFlag> checkPasswordConstraints(String passwordLiteral);
   List<EmailConstraintErrorFlag> checkEmailConstraints(String email);
+  Optional<UserDto> setupProfile(String username, String newUsername);
 }

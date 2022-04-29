@@ -16,6 +16,13 @@
         <li class="nav-item">
           <igni-stream-addbar></igni-stream-addbar>
         </li>
+
+        <ng-container *ngIf="this.currentViews !== null" >
+          <li class="nav-item">
+            <span>Viewers: </span>
+            <span>{{this.currentViews}}</span>
+          </li>
+        </ng-container>
       </ul>
 
       <ul class="navbar-nav navbar-right">

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import { EmbedRecv } from './data/EmbedRecv';
 import { EmbedsRecv } from "./data/EmbedsRecv"
 import { HeartbeatRecv } from './data/HeartbeatRecv';
@@ -10,6 +10,10 @@ import { HeartbeatRecv } from './data/HeartbeatRecv';
 })
 export class StreamService {
 
+  currentPageViewsChanged : Subject<number | null> = new Subject<number | null>();;
+
+  constructor( private http:HttpClient ) {
+  }
 
   public getEmbed(id: string | null) {
 
@@ -25,8 +29,6 @@ export class StreamService {
 
     return recv$;
   }
-
-  constructor( private http:HttpClient ) { }
 
 
   public addEmbed(embedSiteId: number, token: string)
@@ -74,7 +76,11 @@ export class StreamService {
       responseType: 'json',
       observe: 'response'
     }).pipe(
-      map(resp => resp.body as HeartbeatRecv)
+      map(resp => {
+        const result : HeartbeatRecv = resp.body as HeartbeatRecv;
+        this.currentPageViewsChanged.next(result.count);
+        return result;
+      })
     );
 
     return recv$;

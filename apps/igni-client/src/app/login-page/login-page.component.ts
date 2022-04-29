@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AccountService } from '../account/accountservice.service';
 
 @Component({
@@ -8,8 +9,8 @@ import { AccountService } from '../account/accountservice.service';
 })
 export class LoginPageComponent implements OnInit {
 
-  username:string;
-  password:string;
+  username: string;
+  password: string;
 
   constructor(private accountService:AccountService){
     this.username = "";

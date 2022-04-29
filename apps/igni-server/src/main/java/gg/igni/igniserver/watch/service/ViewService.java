@@ -69,6 +69,7 @@ public class ViewService {
     newview.getPrimaryKey().setEmbed(emb);
     newview.getPrimaryKey().setUser(admin);
     viewRepository.save(newview);
+    this.bumpUpdate(id, admin.getId());
 
     View newview2 = new View();
     newview2.setPrimaryKey(new ViewKey());
@@ -76,6 +77,7 @@ public class ViewService {
     newview2.getPrimaryKey().setEmbed(emb);
     newview2.getPrimaryKey().setUser(user1);
     viewRepository.save(newview2);
+    this.bumpUpdate(id, user1.getId());
 
     return true;
   }

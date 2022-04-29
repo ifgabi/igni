@@ -2,7 +2,7 @@ package gg.igni.igniserver.watch.data;
 
 import java.util.List;
 
-public class EmbedsSendDto {
+public class EmbedsRespDto {
   private List<EmbedDto> embeds;
   private long numberOfPages;
 

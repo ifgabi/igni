@@ -1,5 +1,6 @@
 package gg.igni.igniserver.account.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +21,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import gg.igni.igniserver.account.data.AccountConstraints;
-import gg.igni.igniserver.account.data.LoginRequestDto;
-import gg.igni.igniserver.account.data.LoginResponseDto;
+import gg.igni.igniserver.account.data.LoginReqDto;
+import gg.igni.igniserver.account.data.LoginRespDto;
 import gg.igni.igniserver.account.data.SessionHeartbeatResponseDto;
-import gg.igni.igniserver.account.data.SignUpRequestDto;
-import gg.igni.igniserver.account.data.SignUpResponseDto;
+import gg.igni.igniserver.account.data.SetupProfileReqDto;
+import gg.igni.igniserver.account.data.SetupProfileRespDto;
+import gg.igni.igniserver.account.data.SignUpReqDto;
+import gg.igni.igniserver.account.data.SignUpRespDto;
 import gg.igni.igniserver.account.data.UserDto;
+import gg.igni.igniserver.account.data.AccountConstraints.UsernameConstraintErrorFlag;
 import gg.igni.igniserver.account.service.IAccountService;
 import gg.igni.igniserver.model.User;
 
@@ -39,10 +44,10 @@ public class AccountController {
 	private IAccountService accountService;
 
 	@PostMapping("/signup")
-	public ResponseEntity<SignUpResponseDto> signup(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody SignUpRequestDto reqbody) throws NullPointerException {
+	public ResponseEntity<SignUpRespDto> signup(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody SignUpReqDto reqbody) throws NullPointerException {
 
-		SignUpResponseDto respbody = new SignUpResponseDto();
+		SignUpRespDto respbody = new SignUpRespDto();
 
 		//reqbody missing, doesnt happen
 		if(reqbody == null)
@@ -50,13 +55,13 @@ public class AccountController {
 
 		//empty client data, shall not be handled
 		if(reqbody.getUsername() == null)
-			return new ResponseEntity<SignUpResponseDto>(respbody, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<SignUpRespDto>(respbody, HttpStatus.BAD_REQUEST);
 
 		if(reqbody.getPassword() == null)
-			return new ResponseEntity<SignUpResponseDto>(respbody, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<SignUpRespDto>(respbody, HttpStatus.BAD_REQUEST);
 
 		if(reqbody.getEmail() == null)
-			return new ResponseEntity<SignUpResponseDto>(respbody, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<SignUpRespDto>(respbody, HttpStatus.BAD_REQUEST);
 
 		respbody.setUsernameErrorFlags(accountService.checkUsernameConstraints(reqbody.getUsername()));
 		respbody.setPasswordErrorFlags(accountService.checkPasswordConstraints(reqbody.getPassword()));
@@ -75,20 +80,20 @@ public class AccountController {
 			// create user and then log him in
 			respbody.setUserData(accountService.createAccount(reqbody.getUsername(), reqbody.getPassword(), reqbody.getEmail()).orElse(null));
 
-			LoginRequestDto loginreq = new LoginRequestDto();
+			LoginReqDto loginreq = new LoginReqDto();
 			loginreq.setUsername(reqbody.getUsername());
 			loginreq.setPassword(reqbody.getPassword());
 			login(loginreq, request);
 
-			return new ResponseEntity<SignUpResponseDto>(respbody, HttpStatus.OK);
+			return new ResponseEntity<SignUpRespDto>(respbody, HttpStatus.OK);
 		}
 
 		//if there is a problem with the data received over the wire it's client's fault: 400
 		if(respbody.getUsernameErrorFlags().contains(AccountConstraints.UsernameConstraintErrorFlag.ERROR) || respbody.getPasswordErrorFlags().contains(AccountConstraints.PasswordConstraintErrorFlag.ERROR) || respbody.getEmailErrorFlags().contains(AccountConstraints.EmailConstraintErrorFlag.ERROR))
-			return new ResponseEntity<SignUpResponseDto>(respbody, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<SignUpRespDto>(respbody, HttpStatus.BAD_REQUEST);
 
 		//non-critical ERRORs
-		return new ResponseEntity<SignUpResponseDto>(respbody, HttpStatus.OK);
+		return new ResponseEntity<SignUpRespDto>(respbody, HttpStatus.OK);
 	}
 
 	// @PreAuthorize("hasAuthority('PRIVILEGE_USERS_READ')")
@@ -117,13 +122,14 @@ public class AccountController {
 		return new ResponseEntity<SessionHeartbeatResponseDto>(dto, HttpStatus.OK);
 	}
 
+  //this endpoint is strictly for http login, the oauth2 google auth is done automatically by the authprovider provided
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequest, HttpServletRequest request) {
+	public ResponseEntity<LoginRespDto> login(@RequestBody LoginReqDto loginRequest, HttpServletRequest request) {
 		String username = loginRequest.getUsername();
 		String password = loginRequest.getPassword();
 
 		if (username == null || password == null)
-			return new ResponseEntity<LoginResponseDto>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<LoginRespDto>(HttpStatus.BAD_REQUEST);
 
 		SecurityContext sc = SecurityContextHolder.getContext();
 		Authentication auth = sc.getAuthentication();
@@ -131,7 +137,7 @@ public class AccountController {
 		if(auth != null)
 			if(!(auth instanceof AnonymousAuthenticationToken))
 				if(auth.isAuthenticated())
-					return new ResponseEntity<LoginResponseDto>(HttpStatus.BAD_REQUEST); //already logged in returns false
+					return new ResponseEntity<LoginRespDto>(HttpStatus.BAD_REQUEST); //already logged in returns false
 
 		//invalidate session to prevent spoofing
 		//also serves for client-side complete reset
@@ -143,9 +149,9 @@ public class AccountController {
 
     Optional<Authentication> newAuth = accountService.loginAccount(username, password);
 
-    if(newAuth.orElse(null) == null)
+    if(newAuth.isEmpty())
     {
-      return new ResponseEntity<LoginResponseDto>(HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<LoginRespDto>(HttpStatus.UNAUTHORIZED);
     }
 
     //important: creates a session
@@ -160,9 +166,42 @@ public class AccountController {
     ModelMapper mm = new ModelMapper();
     userdto = mm.map(user, UserDto.class);
 
-    LoginResponseDto respDto = new LoginResponseDto();
+    LoginRespDto respDto = new LoginRespDto();
 		respDto.setUserData(userdto);
 		respDto.setUsername(username);
-		return new ResponseEntity<LoginResponseDto>(respDto, HttpStatus.OK);
+		return new ResponseEntity<LoginRespDto>(respDto, HttpStatus.OK);
 	}
+
+  @PostMapping(value = "/setupProfile")
+  @ResponseBody
+  public ResponseEntity<SetupProfileRespDto> setupProfile(@RequestBody SetupProfileReqDto reqBody)
+  {
+    SetupProfileRespDto respDto = new SetupProfileRespDto();
+
+    if(reqBody == null)
+    throw new NullPointerException("RequestBody is null in setupProfile endpoint.");
+
+    //empty client data, shall not be handled
+    if(reqBody.getUsername() == null)
+      return new ResponseEntity<SetupProfileRespDto>(respDto, HttpStatus.BAD_REQUEST);
+
+    if(reqBody.getNewUsername() == null)
+      return new ResponseEntity<SetupProfileRespDto>(respDto, HttpStatus.BAD_REQUEST);
+
+
+    List<UsernameConstraintErrorFlag> usernameErrors = accountService.checkUsernameConstraints(reqBody.getNewUsername());
+    respDto.setUsernameErrorFlags(usernameErrors);
+
+    if(usernameErrors.size() == 0)
+    {
+      Optional<UserDto> userDto = accountService.setupProfile(reqBody.getUsername(), reqBody.getNewUsername());
+      if(userDto.isPresent())
+      {
+        respDto.setUser(userDto.get());
+        return new ResponseEntity<SetupProfileRespDto>(respDto, HttpStatus.ACCEPTED);
+      }
+    }
+
+    return new ResponseEntity<SetupProfileRespDto>(respDto, HttpStatus.BAD_REQUEST);
+  }
 }

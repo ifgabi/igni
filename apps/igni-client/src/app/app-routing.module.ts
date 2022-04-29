@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 
 import { StreamsPageComponent } from './streams-page/streams-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -15,8 +15,13 @@ const routes: Routes = [
   { path: 'stream-page/:embedId', component: StreamPageComponent }
 ];
 
+const options: ExtraOptions = {
+  onSameUrlNavigation: 'reload',
+}
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, options)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

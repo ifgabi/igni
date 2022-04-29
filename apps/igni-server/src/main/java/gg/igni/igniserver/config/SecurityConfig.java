@@ -19,7 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import gg.igni.igniserver.account.service.IgniOAuth2UserDetailsService;
+import gg.igni.igniserver.account.service.IgniOAuth2UserService;
 import gg.igni.igniserver.account.service.IgniUserDetailsService;
 import gg.igni.igniserver.model.User;
 
@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private IgniUserDetailsService userDetailsService;
 
   @Autowired
-  private IgniOAuth2UserDetailsService igniOAuth2UserService;
+  private IgniOAuth2UserService igniOAuth2UserService;
 
   @Override
   protected void configure(AuthenticationManagerBuilder authb) throws Exception
@@ -84,7 +84,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
       .and()
       .authorizeRequests()
-      .antMatchers(HttpMethod.GET, "/user").authenticated();
+      .antMatchers(HttpMethod.GET, "/user").authenticated()
+
+      .and()
+      .authorizeRequests()
+      .antMatchers(HttpMethod.POST, "/setupProfile").authenticated();
 
       http.oauth2Login(oauth2Login ->
       oauth2Login

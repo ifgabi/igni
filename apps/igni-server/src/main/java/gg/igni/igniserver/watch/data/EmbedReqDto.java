@@ -1,6 +1,6 @@
 package gg.igni.igniserver.watch.data;
 
-public class EmbedRecvDto {
+public class EmbedReqDto {
   private String token;
   private Long embedSiteId;
 

@@ -1,6 +1,6 @@
 package gg.igni.igniserver.watch.data;
 
-public class StreamHeartbeatSendDto {
+public class StreamHeartbeatRespDto {
   private int count;
 
   public int getCount() {
