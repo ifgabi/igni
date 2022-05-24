@@ -2,7 +2,7 @@
 
 # igni
 
-Development branch of the igni project. A website that can host a community oriented towards watching livestreams. Inspired by strims.gg, this community website will offer features such as: live chat, different platforms stream embedding and oauth2 integration with other platforms such as gmail, twitchtv etc(soon).
+Development branch of some project. A website that can host a community oriented towards watching livestreams. Inspired by strims.gg, this community website will offer features such as: live chat, different platforms stream embedding and oauth2 integration with other platforms such as gmail, twitchtv etc(soon).
 
 # Development
 
